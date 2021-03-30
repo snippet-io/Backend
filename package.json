@@ -4,7 +4,8 @@
   "description": "snippet-io의 백엔드 코드",
   "main": "index.js",
   "scripts": {
-    "test": "jest src/specs"
+    "test": "jest src/specs",
+    "test-controller": "jest src/specs/controllers"
   },
   "repository": {
     "type": "git",
