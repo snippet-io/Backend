@@ -16,6 +16,9 @@ describe('User Repo 통합 테스트', () => {
     afterEach(async () => {
         await transaction.rollback();
     });
+    afterAll(async () => {
+        await sequelize.close();
+    });
     it('findAll 성공 케이스', async () => {
         const users = await UserRepo.findAll();
         expect(users).toEqual(simple_user_table);
@@ -23,7 +26,7 @@ describe('User Repo 통합 테스트', () => {
     it('create 성공 케이스', async () => {
         const new_user = new UserBuilder(7).build();
         await UserRepo.create(new_user, transaction);
-        const users = await UserRepo.findAll();
+        const users = await UserRepo.findAll(transaction);
         expect(users).toContainEqual(new_user);
     });
 });
