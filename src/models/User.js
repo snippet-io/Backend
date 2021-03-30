@@ -9,7 +9,7 @@ class User {
 class UserBuilder extends ModelBuilder{
     constructor(id) {
         super(User);
-        this.id;
+        this.id = id;
     }
 }
 module.exports = {
