@@ -4,7 +4,7 @@
   "description": "snippet-io의 백엔드 코드",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest src/specs"
   },
   "repository": {
     "type": "git",
