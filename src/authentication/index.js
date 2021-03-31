@@ -2,17 +2,19 @@ const JWT = require('jsonwebtoken');
 const { TOKEN_SECRET } = require('../configs');
 
 class AccessToken {
-    constructor(user_id) {
+    constructor(user_id, oauth_token) {
         if (user_id) {
             this.user_id = user_id;
+            this.oauth_token = oauth_token;
             this.sub = 'access_token';
             this.token = JWT.sign({
                 sub: 'access_token',
                 user_id,
+                oauth_token
             }, 
             TOKEN_SECRET, 
             {
-                expiresIn: '7d',
+                expiresIn: '7d'
             });
         }
     }
@@ -31,6 +33,9 @@ class AccessToken {
     }
     getUserId() {
         return this.user_id;
+    }
+    getOauthToken() {
+        return this.oauth_token;
     }
     toString() {
         return this.token;
