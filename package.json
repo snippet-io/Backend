@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node src/app.js",
     "test": "jest src/specs",
-    "test-controller": "jest src/specs/controllers"
+    "test-controller": "jest src/specs/controllers",
+    "test-service": "jest src/specs/services"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   },
   "homepage": "https://github.com/snippet-io/Backend#readme",
   "dependencies": {
+    "axios": "^0.21.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -29,5 +31,8 @@
   },
   "devDependencies": {
     "jest": "^26.6.3"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
