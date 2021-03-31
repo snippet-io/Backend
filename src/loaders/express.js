@@ -1,9 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const middlewares = require('../apis/middlewares');
-const logger = require('./logger');
 
-const { router, router_passed_middleware }  = require('../apis/routes');
+const api = require('../apis');
 
 
 module.exports = (app) => {
@@ -20,6 +18,8 @@ module.exports = (app) => {
         next()
     });
 
+    app.use('/', api);
+    
     app.use((err, req, res, next) => {
         const status = err.status || 500;
         logger.error(
