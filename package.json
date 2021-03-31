@@ -6,8 +6,10 @@
   "scripts": {
     "start": "node src/app.js",
     "test": "jest src/specs",
+    "test-repository": "jest src/specs/repositories",
     "test-controller": "jest src/specs/controllers",
-    "test-service": "jest src/specs/services"
+    "test-service": "jest src/specs/services",
+    "cover": "jest src/specs --coverage"
   },
   "repository": {
     "type": "git",
