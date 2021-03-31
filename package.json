@@ -4,6 +4,7 @@
   "description": "snippet-io의 백엔드 코드",
   "main": "index.js",
   "scripts": {
+    "start": "node src/app.js",
     "test": "jest src/specs",
     "test-controller": "jest src/specs/controllers"
   },
@@ -20,6 +21,7 @@
   "homepage": "https://github.com/snippet-io/Backend#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.2.5",
