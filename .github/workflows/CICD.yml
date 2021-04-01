@@ -38,4 +38,23 @@ jobs:
     
     - name: test
       run: npm run cover
-  
+
+  CD:
+    runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+    needs: CI
+
+    steps:
+      - uses: actions/checkout@v2
+    
+      - name: docker image build
+        run: docker build -t yeoul/snippet:latest .
+    
+      - name: upload to registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: yeoul/snippet:latest
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
