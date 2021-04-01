@@ -13,7 +13,6 @@ class UserRepo {
     }
 
     static async create(user, transaction) {
-        console.log(new UserBuilder(7))
         await this.repo.create({
             id: user.getId()
         }, { transaction });
