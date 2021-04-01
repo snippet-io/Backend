@@ -1,7 +1,3 @@
-jest.mock('../../configs');
-process.env.DB_DATABASE = 'snippet';
-process.env.DB_USERNAME = 'root';
-process.env.DB_HOST = 'localhost';
 const { UserRepo } = require('../../repositories');
 const { UserBuilder } = require('../../models/User');
 const { sequelize } = require('../../loaders/database');
