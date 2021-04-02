@@ -8,7 +8,7 @@ controllers.login = async (req, res, next) => {
 };
 
 controllers.issueAccessToken = async (req, res, next) => {
-    const code = req.query.code;
+    const code = req.body.code;
     const access_token = await AuthService.createAccessToken(code);
     res.send(access_token);
 };
