@@ -4,7 +4,7 @@ const api = Router();
 
 api.use('/auth/github', AuthRouter);
 api.get('/simple', (req, res) => {
-  res.send(3000);
+  res.send('3000');
 });
 
 module.exports = api;
