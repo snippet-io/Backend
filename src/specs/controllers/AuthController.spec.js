@@ -32,7 +32,7 @@ describe('AuthController 단위 테스트', () => {
         axios.post.mockResolvedValue({data: mocked_oauth_token});
         axios.get.mockResolvedValue({data: mocked_user});
 
-        const req = new FakeRequestBuilder().setQuery({
+        const req = new FakeRequestBuilder().setBody({
             code: 'code'
         });
         const res = new FakeResponse();
