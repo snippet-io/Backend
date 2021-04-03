@@ -2,12 +2,19 @@ const GithubApp = require('../external/GithubApp');
 const { AccessToken } = require('../authentication');
 const { UserBuilder } = require('../models/User');
 const { UserRepo } = require('../repositories');
+const { BadVerificationCode, Unauthorized } = require('../errors/HttpException');
 
 class AuthService {
     static async createAccessToken(user_code) {
         const app = new GithubApp();
 
-        const oauth_token = await app.issueAccessToken(user_code);
+        let oauth_token;
+        try {
+            oauth_token = await app.issueAccessToken(user_code);
+        } catch (e) {
+            throw new BadVerificationCode;
+        }
+        
         const user_data = await app.getUser(oauth_token);
         const user_id = user_data.id;
         const access_token = new AccessToken(user_id, oauth_token);
