@@ -21,9 +21,9 @@ describe('AuthController 단위 테스트', () => {
             redirect: 'http://localhost'
         })
         const res = new FakeResponse();
-        await controllers.login(req, res);
+        const result = await controllers.login(req, res);
 
-        expect(res.result).toBe(`https://github.com/login/oauth/authorize?redirect_uri=http://localhost&client_id=${process.env.GITHUB_CLIENT_ID}`);
+        expect(result).toBe(`https://github.com/login/oauth/authorize?redirect_uri=http://localhost&client_id=${process.env.GITHUB_CLIENT_ID}`);
     });
     
     it('access token을 성공적으로 발급', async () => {
@@ -34,8 +34,8 @@ describe('AuthController 단위 테스트', () => {
         });
         const res = new FakeResponse();
 
-        await controllers.issueAccessToken(req, res);
-        expect(res.result).toEqual({
+        const result= await controllers.issueAccessToken(req, res);
+        expect(result.toJSON()).toEqual({
             access_token: expected_token
         });
     });
