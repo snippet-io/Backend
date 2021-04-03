@@ -25,7 +25,7 @@ class GithubApp {
     async getUser(access_token) {
         const { data } = await GithubApp.AppRequester.get('/user', {
             headers: {
-                Authorization: `token ${oauth_token}`
+                Authorization: `token ${access_token}`
             }
         });
         return data;
