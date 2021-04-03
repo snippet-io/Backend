@@ -24,7 +24,7 @@ describe('AuthController 단위 테스트', () => {
         const res = new FakeResponse();
         const result = await controllers.login(req, res);
 
-        expect(result).toBe(`https://github.com/login/oauth/authorize?redirect_uri=http://localhost&client_id=${process.env.GITHUB_CLIENT_ID}`);
+        expect(result).toEqual({redirect_url: `https://github.com/login/oauth/authorize?redirect_uri=http://localhost&client_id=${process.env.GITHUB_CLIENT_ID}`});
     });
     it('login, redirect가 없음 Bad Request', async () => {
         const req = new FakeRequestBuilder().setQuery({});

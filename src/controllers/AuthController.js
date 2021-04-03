@@ -8,7 +8,9 @@ controllers.login = async (req, res, next) => {
     if(!redirect) {
         throw new BadRequest;
     }
-    return `https://github.com/login/oauth/authorize?redirect_uri=${redirect}&client_id=${configs.GITHUB_CLIENT_ID}`;
+    return {
+        redirect_url: `https://github.com/login/oauth/authorize?redirect_uri=${redirect}&client_id=${configs.GITHUB_CLIENT_ID}`
+    }
 };
 
 controllers.issueAccessToken = async (req, res, next) => {
