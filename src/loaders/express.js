@@ -22,12 +22,6 @@ module.exports = (app) => {
     
     app.use((err, req, res, next) => {
         const status = err.status || 500;
-        logger.error(
-            `${req.method} ${req.url} ${status} : ${err.message}`
-        );
-        console.log(err);
-        res.status(err.status || 500);
-        
         let message;
         if(status == 500) {
             message = '서버에 오류가 발생했습니다.';
@@ -35,6 +29,18 @@ module.exports = (app) => {
         else {
             message = err.message;
         }
+        
+        console.log(
+            `${req.method} ${req.url} ${status} : ${message}`
+        );
+        if(err.captureStackTrace) {
+            console.log(err.captureStackTrace());
+        } 
+        else if(err.stack){
+            console.log(err.stack);
+        }
+
+        res.status(status);
         res.json({
             message,
             status
