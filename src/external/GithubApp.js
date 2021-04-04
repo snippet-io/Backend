@@ -1,6 +1,6 @@
 const axios = require('axios');
 const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET} = require('../configs');
-const { BadVerificationCode, Unauthorized } = require('../errors/GithubAppException');
+const { BadVerificationCode, Unauthorized, IncorrectClientCredentials } = require('../errors/GithubAppException');
 
 class AxiosException extends Error {
     constructor(axios_err) {
@@ -34,6 +34,9 @@ class GithubApp {
         }
         if(res.data.error == 'bad_verification_code') {
             throw new BadVerificationCode;
+        }
+        else if(res.data.error == 'incorrect_client_cre dentials') {
+            throw new IncorrectClientCredentials;
         }
         return res.data.access_token;
     }

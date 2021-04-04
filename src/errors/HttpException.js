@@ -26,10 +26,16 @@ class NotFound extends HttpException {
         super(404, message || 'Not Found');
     }
 }
-
+class InvalidServerConfiguration extends HttpException{
+    constructor() {
+        super(500, "서버가 잘 못 구성되었습니다.");
+    }
+}
 module.exports = {
     BadRequest,
     Unauthorized,
     BadVerificationCode,
-    NotFound
+    NotFound,
+
+    InvalidServerConfiguration
 };
