@@ -15,10 +15,8 @@ class AuthService {
             throw new BadVerificationCode;
         }
         
-        const user_data = await app.getUser(oauth_token);
-        const user_id = user_data.id;
-        const access_token = new AccessToken(user_id, oauth_token);
-        const user = new UserBuilder(user_id).build();
+        const access_token = await AccessToken.issue(oauth_token);
+        const user = new UserBuilder(access_token.user_id).build();
         UserRepo.create(user);
 
         return access_token;
