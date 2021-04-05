@@ -18,6 +18,7 @@ class AccessToken {
     static async fromString(token) {
         try {
             const payload = JWT.verify(token, TOKEN_SECRET, { subject: 'access_token' });
+            const github_app = new GithubApp;
             const github_user = await github_app.getUser(payload.oauth_token);
     
             if(github_user.id !== payload.user_id) throw new InvalidToken;
