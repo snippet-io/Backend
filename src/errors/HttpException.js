@@ -16,6 +16,11 @@ class Unauthorized extends HttpException {
         super(401, message || 'Unathorized');
     }
 }
+class Forbidden extends HttpException {
+    constructor(message) {
+        super(403, message || 'Forbidden');
+    }
+}
 class BadVerificationCode extends Unauthorized {
     constructor() {
         super('해당 code값으로 인증할 수 없습니다.');
@@ -34,6 +39,7 @@ class InvalidServerConfiguration extends HttpException{
 module.exports = {
     BadRequest,
     Unauthorized,
+    Forbidden,
     BadVerificationCode,
     NotFound,
 
