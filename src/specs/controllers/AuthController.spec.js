@@ -1,5 +1,5 @@
 jest.mock('../../external/GithubApp');
-jest.mock('../../repositories/definitions/UserRepo');
+require('../util').mockAllRepo();
 jest.spyOn(Date, 'now').mockImplementation(() => 1616466983480);
 jest.mock('../../configs');
 process.env.GITHUB_CLIENT_ID = 'client_id';
