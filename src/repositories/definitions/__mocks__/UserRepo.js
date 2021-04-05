@@ -6,6 +6,10 @@ mock.mockClear = jest.fn().mockImplementation(() => {
     mocking_user_datas = [ new UserBuilder(5).build() ];
 
 });
+mock.repo = {
+    hasMany: jest.fn(),
+    belongsTo: jest.fn()
+}
 
 mock.findAll = jest.fn()
     .mockImplementation(() => {
