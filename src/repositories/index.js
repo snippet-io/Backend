@@ -1,5 +1,6 @@
-const { UserRepo } = require('./relations');
+const { UserRepo, CodeRepo } = require('./relations');
 
 module.exports = {
-    UserRepo
+    UserRepo,
+    CodeRepo
 };
