@@ -3,11 +3,16 @@ class FakeRequest {
         this.body = data.body;
         this.params = data.params;
         this.auth = data.auth;
+        this.header = data.header;
+        this.query = data.query;
+    }
+    get(attribute) {
+        return this.header[attribute];
     }
 }
 class FakeRequestBuilder {
-    setAuth(token) {
-        this.auth = token;
+    setHeader(header) {
+        this.header = header;
         return this;
     }
     setParams(params) {
