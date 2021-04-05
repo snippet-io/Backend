@@ -1,6 +1,6 @@
 jest.mock('../../external/GithubApp');
 jest.mock('../../configs');
-jest.mock('../../repositories/definitions/UserRepo');
+require('../util').mockAllRepo();
 process.env.TOKEN_SECRET = 'token_secret';
 jest.spyOn(Date, 'now').mockImplementation(() => 1616466983480);
 
