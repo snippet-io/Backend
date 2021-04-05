@@ -9,6 +9,7 @@
     "test-repository": "jest src/specs/repositories",
     "test-controller": "jest src/specs/controllers",
     "test-service": "jest src/specs/services",
+    "test-middleware": "jest src/specs/middlewares",
     "cover": "jest src/specs --coverage"
   },
   "repository": {
