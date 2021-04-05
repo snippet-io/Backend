@@ -5,8 +5,8 @@ const { AccessToken } = require('../../authentication');
 const controllers = require('../../controllers/CodeController');
 const { CodeBuilder } = require('../../models/Code');
 const { UserRepo, CodeRepo } = require('../../repositories');
-const FakeRequestBuilder = require('./FakeRequest');
-const FakeResponse = require('./FakeResponse');
+const FakeRequestBuilder = require('../FakeRequest');
+const FakeResponse = require('../FakeResponse');
 
 describe('CodeController 단위 테스트', () => {
     beforeEach(() => {

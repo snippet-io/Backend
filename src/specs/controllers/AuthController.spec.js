@@ -5,8 +5,8 @@ jest.mock('../../configs');
 process.env.GITHUB_CLIENT_ID = 'client_id';
 process.env.TOKEN_SECRET = 'token_secret';
 const controllers = require('../../controllers/AuthController');
-const FakeRequestBuilder = require('./FakeRequest');
-const FakeResponse = require('./FakeResponse');
+const FakeRequestBuilder = require('../FakeRequest');
+const FakeResponse = require('../FakeResponse');
 
 const GithubApp = require('../../external/GithubApp');
 const { UserRepo } = require('../../repositories');
