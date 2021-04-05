@@ -6,6 +6,10 @@ class FakeRequest {
     }
 }
 class FakeRequestBuilder {
+    setAuth(token) {
+        this.auth = token;
+        return this;
+    }
     setParams(params) {
         this.params = params;
         return this;
