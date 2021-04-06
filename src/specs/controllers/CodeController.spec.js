@@ -1,4 +1,5 @@
 require('../util').mockAllRepo();
+jest.mock('../../external/GithubApp');
 jest.mock('../../authentication');
 
 const { AccessToken } = require('../../authentication');
