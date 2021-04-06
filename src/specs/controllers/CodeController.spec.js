@@ -45,6 +45,7 @@ describe('CodeController 단위 테스트', () => {
             code.description = undefined;
             return code;
         })).toContainEqual(expected_new_code);
+        expect(res.getStatus()).toBe(201);
     });
 });
 
