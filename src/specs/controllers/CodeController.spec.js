@@ -4,6 +4,7 @@ jest.mock('../../authentication');
 
 const { AccessToken } = require('../../authentication');
 const controllers = require('../../controllers/CodeController');
+const { BadRequest } = require('../../errors/HttpException');
 const { CodeBuilder } = require('../../models/Code');
 const { UserRepo, CodeRepo } = require('../../repositories');
 const FakeRequestBuilder = require('../FakeRequest');
@@ -47,6 +48,24 @@ describe('CodeController 단위 테스트', () => {
             return code;
         })).toContainEqual(expected_new_code);
         expect(res.getStatus()).toBe(201);
+    });
+    it('code 생성 실패(400) - content 없음', async () => {
+        AccessToken.mockImplementation(() => {
+            return {
+                getUserId: () => 1
+            }
+        });
+        AccessToken.issue = jest.fn().mockImplementation(() => new AccessToken);
+        const req = new FakeRequestBuilder()
+            .setBody({
+                title: 'title',
+                language: 'language',
+                description: 'description'
+            })
+            .setAuth(await AccessToken.issue('access_token'))
+            .build();
+        const res = new FakeResponse;
+        await expect(controllers.createCode(req, res)).rejects.toThrow(BadRequest);
     });
 });
 
