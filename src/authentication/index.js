@@ -21,8 +21,6 @@ class AccessToken {
             const github_app = new GithubApp;
             const github_user = await github_app.getUser(payload.oauth_token);
     
-            if(github_user.id !== payload.user_id) throw new InvalidToken;
-    
             const access_token = new AccessToken();
             access_token.token = token;
             access_token.user_id = payload.user_id;
