@@ -8,6 +8,10 @@ controllers.createCode = async (req, res) => {
     const access_token = req.auth;
     const { title, content, language, description } = req.body;
 
+    if( !title || !content || !language) {
+        throw new BadRequest;
+    }
+
     const new_code = new CodeBuilder(title, language, access_token.getUserId()).setContent(content).setDescription(description).build();
 
     await CodeService.createCode(new_code);
