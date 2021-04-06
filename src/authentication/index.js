@@ -48,19 +48,6 @@ class AccessToken {
         return this.token;
     }
 }
-class Tokens {
-    constructor(tokens) {
-        this.tokens = tokens;
-    }
-
-    toJSON() {
-        const result = {};
-        for(const token of this.tokens) {
-            result[token.sub] = token.token;
-        }
-        return result;
-    }
-}
 
 async function newAccessToken(user_id, oauth_token) {
     const access_token = new AccessToken();
@@ -81,6 +68,5 @@ async function newAccessToken(user_id, oauth_token) {
 }
 
 module.exports = {
-    AccessToken,
-    Tokens,
+    AccessToken
 };
