@@ -1,6 +1,7 @@
 const { CodeRepo } = require('../../repositories');
 const { CodeBuilder } = require('../../models/Code');
 const { sequelize } = require('../../loaders/database');
+const { NotFound } = require('../../errors/HttpException');
 
 const simple_code_table = [new CodeBuilder('코드제목', 'rust', 1).setContent('내용').setId(1).setDescription('설명').build()];
 
@@ -41,5 +42,8 @@ describe('Code Repo 통합 테스트', () => {
         await CodeRepo.delete(1, transaction);
         const codes = await CodeRepo.findAll(transaction);
         expect(codes).toEqual([]);        
+    });
+    it('delete 실패 케이스 - 삭제 할게 없음', async () => {
+        await expect(CodeRepo.delete(2, transaction)).rejects.toThrow(NotFound);
     });
 });
