@@ -4,7 +4,7 @@ jest.mock('../../authentication');
 
 const { AccessToken } = require('../../authentication');
 const controllers = require('../../controllers/CodeController');
-const { BadRequest } = require('../../errors/HttpException');
+const { BadRequest, NotFound } = require('../../errors/HttpException');
 const { CodeBuilder } = require('../../models/Code');
 const { UserRepo, CodeRepo } = require('../../repositories');
 const FakeRequestBuilder = require('../FakeRequest');
@@ -66,6 +66,17 @@ describe('CodeController 단위 테스트', () => {
             .build();
         const res = new FakeResponse;
         await expect(controllers.createCode(req, res)).rejects.toThrow(BadRequest);
+    });
+    it('code 삭제', async () => {
+        const req = new FakeRequestBuilder().setParams({ id: 1 }).build();
+        await controllers.deleteCode(req);
+
+        const codes = await CodeRepo.findAll();
+        expect(codes).toEqual([]);
+    });
+    it('code 삭제 실패(404) - 해당 code를 찾을 수 없음', async () => {
+        const req = new FakeRequestBuilder().setParams({ id: 2 }).build();
+        await expect(controllers.deleteCode(req)).rejects.toThrow(NotFound);
     });
 });
 
