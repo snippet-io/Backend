@@ -17,5 +17,10 @@ controllers.createCode = async (req, res) => {
     await CodeService.createCode(new_code);
     res.status(201);
 };
+controllers.deleteCode = async (req) => {
+    const code_id = req.params.id;
+
+    await CodeService.deleteCode(code_id);
+};
 
 module.exports = controllers;
