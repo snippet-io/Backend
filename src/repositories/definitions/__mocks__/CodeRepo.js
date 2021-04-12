@@ -30,5 +30,9 @@ mock.create = jest.fn()
             .build();
         mocking_code_datas.push(new_code);
     });
+mock.delete = jest.fn()
+    .mockImplementation((code_id) => {
+        mocking_code_datas = mocking_code_datas.filter(code => code.getId() !== code_id);
+    });
 
 module.exports = mock;
