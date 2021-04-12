@@ -1,4 +1,5 @@
 const { Model, DataTypes, DatabaseError } = require('sequelize');
+const { NotFound } = require('../../errors/HttpException');
 const { sequelize } = require('../../loaders/database');
 const { CodeBuilder } = require('../../models/Code');
 
@@ -20,12 +21,15 @@ class CodeRepo {
         await this.repo.create(ModelToEntity(code), { transaction });
     }
     static async delete(code_id, transaction){
-        await this.repo.destroy({
+        const number_of_destroyed = await this.repo.destroy({
             where: {
                 id: code_id
             },
             transaction
         });
+        if (number_of_destroyed <= 0) {
+            throw new NotFound;
+        }
     }
 }
 function EntityToCode(entity) {

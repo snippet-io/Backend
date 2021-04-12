@@ -1,3 +1,4 @@
+const { NotFound } = require('../../../errors/HttpException');
 const { CodeBuilder } = require('../../../models/Code');
 
 let mocking_code_datas;
@@ -32,7 +33,13 @@ mock.create = jest.fn()
     });
 mock.delete = jest.fn()
     .mockImplementation((code_id) => {
+        const before_len = mocking_code_datas.length;
         mocking_code_datas = mocking_code_datas.filter(code => code.getId() !== code_id);
+        const after_len = mocking_code_datas.length;
+
+        if(before_len == after_len) {
+            throw new NotFound;
+        }
     });
 
 module.exports = mock;
