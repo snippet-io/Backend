@@ -19,6 +19,14 @@ class CodeRepo {
     static async create(code, transaction) {
         await this.repo.create(ModelToEntity(code), { transaction });
     }
+    static async delete(code_id, transaction){
+        await this.repo.destroy({
+            where: {
+                id: code_id
+            },
+            transaction
+        });
+    }
 }
 function EntityToCode(entity) {
     return new CodeBuilder(entity.title, entity.language, entity.author_id)
