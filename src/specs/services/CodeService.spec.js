@@ -21,4 +21,9 @@ describe('Code 서비스 단위 테스트', () => {
             return code;
         })).toContainEqual(new_code);
     });
+    it('코드 삭제 성공', async () => {
+        await CodeService.deleteCode(1);
+        const codes = await CodeRepo.findAll();
+        expect(codes).toEqual([]);
+    });
 });
