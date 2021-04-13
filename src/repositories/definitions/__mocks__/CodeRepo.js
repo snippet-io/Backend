@@ -41,5 +41,10 @@ mock.delete = jest.fn()
             throw new NotFound;
         }
     });
+mock.update = jest.fn()
+    .mockImplementation(code => {
+        mocking_code_datas = mocking_code_datas.filter(c => c.getId() !== code.getId());
+        mocking_code_datas.push(code);
+    });
 
 module.exports = mock;
