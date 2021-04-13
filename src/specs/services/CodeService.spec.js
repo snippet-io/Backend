@@ -26,4 +26,11 @@ describe('Code 서비스 단위 테스트', () => {
         const codes = await CodeRepo.findAll();
         expect(codes).toEqual([]);
     });
+    it('코드 업데이트 성공', async () => {
+        const modified_code = new CodeBuilder('수정된 코드', 'c++', 1).setId(1).build();
+        await CodeService.modifyCode(modified_code);
+
+        const codes = await CodeRepo.findAll();
+        expect(codes).toEqual([modified_code]);
+    });
 });
