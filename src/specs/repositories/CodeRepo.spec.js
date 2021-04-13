@@ -46,4 +46,16 @@ describe('Code Repo 통합 테스트', () => {
     it('delete 실패 케이스 - 삭제 할게 없음', async () => {
         await expect(CodeRepo.delete(2, transaction)).rejects.toThrow(NotFound);
     });
+    it('update 성공 케이스', async () => {
+        const modified_code = new CodeBuilder('수정된 코드', 'c++', 1).setId(1).setContent('내용').build();
+        await CodeRepo.update(modified_code, transaction);
+
+        const codes = await CodeRepo.findAll(transaction);
+        modified_code.content = undefined;
+        expect(codes).toEqual([modified_code]);
+    });
+    it('update 실패 케이스 - 수정 할게 없음', async () => {
+        const modified_code = new CodeBuilder('수정된 코드', 'c++', 1).setId(9).setContent('내용').build();
+        await expect(CodeRepo.update(modified_code, transaction)).rejects.toThrow(NotFound);
+    });
 });
