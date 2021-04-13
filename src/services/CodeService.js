@@ -8,6 +8,9 @@ class CodeService {
     static async deleteCode(code_id) {
         await CodeRepo.delete(code_id);
     }
+    static async modifyCode(code){
+        await CodeRepo.update(code);
+    }
 }
 
 module.exports = CodeService;
