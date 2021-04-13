@@ -20,6 +20,17 @@ class CodeRepo {
     static async create(code, transaction) {
         await this.repo.create(ModelToEntity(code), { transaction });
     }
+    static async update(code, transaction) {
+        const [ number_of_modified ] = await this.repo.update(ModelToEntity(code), {
+            where: {
+                id: code.getId()
+            },
+            transaction
+        })
+        if(number_of_modified <= 0) {
+            throw new NotFound;
+        }
+    }
     static async delete(code_id, transaction){
         const number_of_destroyed = await this.repo.destroy({
             where: {
