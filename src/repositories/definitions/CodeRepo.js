@@ -42,6 +42,17 @@ class CodeRepo {
             throw new NotFound;
         }
     }
+    static async findByAuthorId(author_id, transaction) {
+        const code_entities = await this.repo.findAll({
+            where: {
+                author_id: author_id
+            },
+            transaction
+        });
+
+        const codes = code_entities.map(entity => EntityToCode(entity));
+        return codes;
+    }
 }
 function EntityToCode(entity) {
     return new CodeBuilder(entity.title, entity.language, entity.author_id)
