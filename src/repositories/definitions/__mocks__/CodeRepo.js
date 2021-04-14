@@ -46,5 +46,9 @@ mock.update = jest.fn()
         mocking_code_datas = mocking_code_datas.filter(c => c.getId() !== code.getId());
         mocking_code_datas.push(code);
     });
-
+mock.findByAuthorId = jest.fn()
+    .mockImplementation(author_id => {
+        const result = mocking_code_datas.filter(code => code.getAuthorId() == author_id);
+        return result;
+    });
 module.exports = mock;
