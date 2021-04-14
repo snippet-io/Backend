@@ -78,5 +78,26 @@ describe('CodeController 단위 테스트', () => {
         const req = new FakeRequestBuilder().setParams({ id: 2 }).build();
         await expect(controllers.deleteCode(req)).rejects.toThrow(NotFound);
     });
+    it('code 수정', async () => {
+        AccessToken.mockImplementation(() => {
+            return {
+                getUserId: () => 1
+            }
+        });
+        AccessToken.issue = jest.fn().mockImplementation(() => new AccessToken);
+
+        const req = new FakeRequestBuilder()
+            .setAuth(AccessToken.issue('access_token'))
+            .setParams({ id: 1 })
+            .setBody({
+                title: '수정된 코드',
+                content: '내',
+                language: 'c++',
+            }).build();
+        await controllers.modifyCode(req, new FakeResponse);
+        
+        const codes = await CodeRepo.findAll();
+        expect(codes).toEqual([new CodeBuilder('수정된 코드', 'c++', 1).setContent(undefined).setId(1).build()]);
+    });
 });
 
