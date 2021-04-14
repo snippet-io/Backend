@@ -18,14 +18,7 @@ describe('Code Repo 통합 테스트', () => {
     });
     it('findAll 성공 케이스', async () => {
         const codes = await CodeRepo.findAll();
-        expect(codes).toEqual(simple_code_table.map((code) => { return {
-            id: code.getId(),
-            title: code.getTitle(),
-            content: undefined,
-            description: undefined,
-            author: code.getAuthor(),
-            language: code.getLanguage()
-        }}));
+        expect(codes).toEqual(simple_code_table);
     });
     it('findById 성공 케이스', async () => {
         const code = await CodeRepo.findById(1);
@@ -35,7 +28,6 @@ describe('Code Repo 통합 테스트', () => {
         const new_code = new CodeBuilder('title', 'language', 1).setContent('content').build();
         await CodeRepo.create(new_code, transaction);
         const codes = await CodeRepo.findAll(transaction);
-        new_code.content = undefined;
         expect(codes.map((code) => {code.id = undefined; return code;})).toContainEqual(new_code);
     });
     it('delete 성공 케이스', async () => {
@@ -51,7 +43,6 @@ describe('Code Repo 통합 테스트', () => {
         await CodeRepo.update(modified_code, transaction);
 
         const codes = await CodeRepo.findAll(transaction);
-        modified_code.content = undefined;
         expect(codes).toEqual([modified_code]);
     });
     it('update 실패 케이스 - 수정 할게 없음', async () => {

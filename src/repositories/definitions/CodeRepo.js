@@ -8,7 +8,7 @@ class CodeRepo {
     static repo = Repo;
     
     static async findAll(transaction) {
-        const code_entities = await this.repo.findAll({attributes: ['id', 'title', 'language', 'author_id'], transaction});
+        const code_entities = await this.repo.findAll({transaction});
         const codes = code_entities.map(EntityToCode);
         return codes;
     }
@@ -45,8 +45,8 @@ class CodeRepo {
 }
 function EntityToCode(entity) {
     return new CodeBuilder(entity.title, entity.language, entity.author_id)
-        .setContent(entity.content)
-        .setDescription(entity.description)
+        .setContent(entity.content || undefined)
+        .setDescription(entity.description || undefined)
         .setId(entity.id)
         .build();
 }
@@ -56,7 +56,7 @@ function ModelToEntity(model) {
         title: model.getTitle(),
         content: model.getContent(),
         language: model.getLanguage(),
-        description: model.getDescription(),
+        description: model.getDescription() || null,
         author_id: model.getAuthorId(),
     }
 }
