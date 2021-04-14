@@ -49,4 +49,8 @@ describe('Code Repo 통합 테스트', () => {
         const modified_code = new CodeBuilder('수정된 코드', 'c++', 1).setId(9).setContent('내용').build();
         await expect(CodeRepo.update(modified_code, transaction)).rejects.toThrow(NotFound);
     });
+    it('findByAuthorId 성공 케이스', async () => {
+        const codes = await CodeRepo.findByAuthorId(1, transaction);
+        expect(codes).toEqual(simple_code_table.filter(code => code.getId() == 1));
+    });
 });
