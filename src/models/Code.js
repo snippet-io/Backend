@@ -49,10 +49,10 @@ class CodeBuilder extends ModelBuilder{
     constructor(title, language, author_id) {
         super(Code);
         this.title = title;
-        this.content = null;
+        this.content = undefined;
         this.language = language;
         this.author = { id: author_id };
-        this.id = null;
+        this.id = undefined;
     }
     setContent(content) {
         this.content = content;

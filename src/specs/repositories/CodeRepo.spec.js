@@ -36,7 +36,7 @@ describe('Code Repo 통합 테스트', () => {
         await CodeRepo.create(new_code, transaction);
         const codes = await CodeRepo.findAll(transaction);
         new_code.content = undefined;
-        expect(codes.map((code) => {code.id=null; return code;})).toContainEqual(new_code);
+        expect(codes.map((code) => {code.id = undefined; return code;})).toContainEqual(new_code);
     });
     it('delete 성공 케이스', async () => {
         await CodeRepo.delete(1, transaction);

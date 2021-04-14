@@ -43,7 +43,7 @@ describe('CodeController 단위 테스트', () => {
         expected_new_code.content = undefined;
         expected_new_code.description = undefined;
         expect(codes.map((code) => {
-            code.id = null;
+            code.id = undefined;
             code.description = undefined;
             return code;
         })).toContainEqual(expected_new_code);

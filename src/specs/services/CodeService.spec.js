@@ -17,7 +17,7 @@ describe('Code 서비스 단위 테스트', () => {
         const codes = await CodeRepo.findAll();
         new_code.content = undefined;
         expect(codes.map((code) => {
-            code.id = null;
+            code.id = undefined;
             return code;
         })).toContainEqual(new_code);
     });
