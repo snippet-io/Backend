@@ -51,6 +51,6 @@ describe('Code Repo 통합 테스트', () => {
     });
     it('findByAuthorId 성공 케이스', async () => {
         const codes = await CodeRepo.findByAuthorId(1, transaction);
-        expect(codes).toEqual(simple_code_table.filter(code => code.getId() == 1));
+        expect(codes).toEqual(simple_code_table.filter(code => code.getAuthorId() == 1));
     });
 });
