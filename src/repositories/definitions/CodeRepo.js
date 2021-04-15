@@ -2,6 +2,7 @@ const { Model, DataTypes, DatabaseError } = require('sequelize');
 const { NotFound } = require('../../errors/HttpException');
 const { sequelize } = require('../../loaders/database');
 const { CodeBuilder } = require('../../models/Code');
+const Option = require('../../utils/option');
 
 class Repo extends Model { }
 class CodeRepo {
@@ -14,7 +15,7 @@ class CodeRepo {
     }
     static async findById(id, transaction) {
         const code_entity = await this.repo.findByPk(id, {transaction});
-        const code = EntityToCode(code_entity);
+        const code = code_entity? Option.some(EntityToCode(code_entity)) : Option.none;
         return code;
     }
     static async create(code, transaction) {
