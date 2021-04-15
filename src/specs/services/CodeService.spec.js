@@ -1,5 +1,6 @@
 require('../util').mockAllRepo();
 
+const { Forbidden, NotFound } = require('../../errors/HttpException');
 const { CodeBuilder } = require("../../models/Code");
 const { UserRepo, CodeRepo } = require("../../repositories");
 const CodeService = require('../../services/CodeService');
@@ -32,5 +33,13 @@ describe('Code 서비스 단위 테스트', () => {
 
         const codes = await CodeRepo.findAll();
         expect(codes).toEqual([modified_code]);
+    });
+    it('코드 업데이트 실패 - 코드의 작성자 불일치', async ()=> {
+        const modified_code = new CodeBuilder('수정된 코드', 'c++', 5).setId(1).build();
+        await expect(CodeService.modifyCode(modified_code)).rejects.toThrow(Forbidden);
+    });
+    it('코드 업데이트 실패 - 찾을 수 없는 코드', async () => {
+        const modified_code = new CodeBuilder('수정된 코드', 'c++', 1).setId(999).build();
+        await expect(CodeService.modifyCode(modified_code)).rejects.toThrow(NotFound);
     });
 });
