@@ -19,8 +19,9 @@ controllers.createCode = async (req, res) => {
 };
 controllers.deleteCode = async (req) => {
     const code_id = req.params.id;
+    const auth_id = req.auth.getUserId();
 
-    await CodeService.deleteCode(code_id);
+    await CodeService.deleteCode(code_id, auth_id);
 };
 controllers.modifyCode = async (req) => {
     const access_token = req.auth;
