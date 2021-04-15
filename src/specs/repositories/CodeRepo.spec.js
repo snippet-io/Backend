@@ -1,7 +1,7 @@
 const { CodeRepo } = require('../../repositories');
 const { CodeBuilder } = require('../../models/Code');
 const { sequelize } = require('../../loaders/database');
-const { NotFound } = require('../../errors/HttpException');
+const { NotFound, Forbidden } = require('../../errors/HttpException');
 
 const simple_code_table = [new CodeBuilder('코드제목', 'rust', 1).setContent('내용').setId(1).setDescription('설명').build()];
 
@@ -50,8 +50,8 @@ describe('Code Repo 통합 테스트', () => {
         expect(codes).toEqual([modified_code]);
     });
     it('update 실패 케이스 - 수정 할게 없음', async () => {
-        const modified_code = new CodeBuilder('수정된 코드', 'c++', 1).setId(9).setContent('내용').build();
-        await expect(CodeRepo.update(modified_code, transaction)).rejects.toThrow(NotFound);
+        const modified_code = new CodeBuilder('수정된 코드', 'c++', 9).setId(1).setContent('내용').build();
+        await expect(CodeRepo.update(modified_code, transaction)).rejects.toThrow(Forbidden);
     });
     it('findByAuthorId 성공 케이스', async () => {
         const codes = await CodeRepo.findByAuthorId(1, transaction);
