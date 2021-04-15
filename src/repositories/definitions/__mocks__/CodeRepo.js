@@ -64,4 +64,8 @@ mock.findByAuthorId = jest.fn()
         const result = mocking_code_datas.filter(code => code.getAuthorId() == author_id);
         return result;
     });
+mock.findAllLimitedTo = jest.fn()
+    .mockImplementation((limit, offset) => {
+        return mocking_code_datas.slice(offset, offset + limit);
+    });
 module.exports = mock;
