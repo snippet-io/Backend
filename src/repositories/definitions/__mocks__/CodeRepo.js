@@ -1,5 +1,6 @@
 const { NotFound } = require('../../../errors/HttpException');
 const { CodeBuilder } = require('../../../models/Code');
+const Option = require('../../../utils/option');
 
 let mocking_code_datas;
 const mock = {};
@@ -21,7 +22,12 @@ mock.findAll = jest.fn()
         });
     });
 mock.findById = jest.fn()
-    .mo
+    .mockImplementation(id => {
+        let result = mocking_code_datas.filter(code => code.getId() == id)[0];
+
+        result = result? Option.some(result) : Option.none;
+        return result;
+    });
 mock.create = jest.fn()
     .mockImplementation((code) => {
         const new_code = new CodeBuilder(code.getTitle(), code.getLanguage(), code.getAuthorId())
