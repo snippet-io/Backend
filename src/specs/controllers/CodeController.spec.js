@@ -113,5 +113,17 @@ describe('CodeController 단위 테스트', () => {
         const codes = await CodeRepo.findAll();
         expect(codes).toEqual([new CodeBuilder('수정된 코드', 'c++', 1).setContent(undefined).setId(1).build()]);
     });
+    it('code list 얻기', async () => {
+        const req = new FakeRequestBuilder().setQuery({limit: 5, offset: 0});
+        const codes = await controllers.getCodes(req, new FakeResponse);
+        expect(codes.map(c => c.toJSON())).toEqual([{
+            id: 1,
+            title: '코드제목',
+            content: '내용',
+            language: 'rust',
+            description: '설명',
+            author: 1
+        }]);
+    });
 });
 
