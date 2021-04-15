@@ -22,6 +22,9 @@ class CodeService {
         
         await CodeRepo.update(code);
     }
+    static async getCodes(limit, offset) {
+        return await CodeRepo.findAllLimitedTo(limit, offset);
+    }
 }
 
 module.exports = CodeService;
