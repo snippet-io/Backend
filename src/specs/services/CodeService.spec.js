@@ -48,4 +48,8 @@ describe('Code 서비스 단위 테스트', () => {
         const modified_code = new CodeBuilder('수정된 코드', 'c++', 1).setId(999).build();
         await expect(CodeService.modifyCode(modified_code)).rejects.toThrow(NotFound);
     });
+    it('코드 리스트 얻기 성공', async () => {
+        const codes = await CodeService.getCodes(5, 0);
+        expect(codes).toEqual([new CodeBuilder('코드제목', 'rust', 1).setContent('내용').setDescription('설명').setId(1).build()]);
+    });
 });
