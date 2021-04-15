@@ -1,4 +1,4 @@
-const { NotFound } = require('../../../errors/HttpException');
+const { NotFound, Forbidden } = require('../../../errors/HttpException');
 const { CodeBuilder } = require('../../../models/Code');
 const Option = require('../../../utils/option');
 
@@ -49,7 +49,14 @@ mock.delete = jest.fn()
     });
 mock.update = jest.fn()
     .mockImplementation(code => {
-        mocking_code_datas = mocking_code_datas.filter(c => c.getId() !== code.getId());
+        const before_len = mocking_code_datas.length;
+        mocking_code_datas = mocking_code_datas.filter(c => c.getId() !== code.getId() || c.getAuthorId() !== code.getAuthorId());
+        const after_len = mocking_code_datas.length;
+
+        if(before_len == after_len) {
+            throw new Forbidden;
+        }
+
         mocking_code_datas.push(code);
     });
 mock.findByAuthorId = jest.fn()
