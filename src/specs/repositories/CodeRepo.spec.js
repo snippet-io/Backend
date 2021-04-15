@@ -20,6 +20,10 @@ describe('Code Repo 통합 테스트', () => {
         const codes = await CodeRepo.findAll();
         expect(codes).toEqual(simple_code_table);
     });
+    it('findAllLimitedTo 성공 케이스', async () => {
+        const codes = await CodeRepo.findAllLimitedTo(5, 0, transaction);
+        expect(codes).toEqual(simple_code_table);
+    });
     it('findById 성공 케이스', async () => {
         const code = await CodeRepo.findById(1);
         expect(code.orElseThrow(new Error)).toEqual(simple_code_table[0]);

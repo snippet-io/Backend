@@ -13,6 +13,15 @@ class CodeRepo {
         const codes = code_entities.map(EntityToCode);
         return codes;
     }
+    static async findAllLimitedTo(limit, offset, transaction) {
+        const code_entities = await this.repo.findAll({
+            limit,
+            offset,
+            transaction
+        });
+        const codes = code_entities.map(EntityToCode);
+        return codes;
+    }
     static async findById(id, transaction) {
         const code_entity = await this.repo.findByPk(id, {transaction});
         const code = code_entity? Option.some(EntityToCode(code_entity)) : Option.none;
