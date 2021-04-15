@@ -36,5 +36,10 @@ controllers.modifyCode = async (req) => {
 
     await CodeService.modifyCode(modified_code);
 };
+controllers.getCodes = async (req) => {
+    const { limit, offset } = req.query;
+
+    return await CodeService.getCodes(limit, offset);
+};
 
 module.exports = controllers;
