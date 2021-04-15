@@ -22,7 +22,11 @@ describe('Code Repo 통합 테스트', () => {
     });
     it('findById 성공 케이스', async () => {
         const code = await CodeRepo.findById(1);
-        expect(code).toEqual(simple_code_table[0]);
+        expect(code.orElseThrow(new Error)).toEqual(simple_code_table[0]);
+    });
+    it('findById 실패 케이스', async () => {
+        const code = await CodeRepo.findById(9);
+        expect(() => code.orElseThrow(new Error)).toThrow(Error);
     });
     it('create 성공 케이스', async () => {
         const new_code = new CodeBuilder('title', 'language', 1).setContent('content').build();
