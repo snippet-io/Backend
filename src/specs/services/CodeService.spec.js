@@ -23,9 +23,15 @@ describe('Code 서비스 단위 테스트', () => {
         })).toContainEqual(new_code);
     });
     it('코드 삭제 성공', async () => {
-        await CodeService.deleteCode(1);
+        await CodeService.deleteCode(1, 1);
         const codes = await CodeRepo.findAll();
         expect(codes).toEqual([]);
+    });
+    it('코드 삭제 실패 - 코드의 작성자 불일치', async () => {
+        await expect(CodeService.deleteCode(1, 2)).rejects.toThrow(Forbidden);
+    });
+    it('코드 삭제 실패 - 찾을 수 없는 코드', async () => {
+        await expect(CodeService.deleteCode(999, 1)).rejects.toThrow(NotFound);
     });
     it('코드 업데이트 성공', async () => {
         const modified_code = new CodeBuilder('수정된 코드', 'c++', 1).setId(1).build();
