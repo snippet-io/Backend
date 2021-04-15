@@ -68,14 +68,28 @@ describe('CodeController 단위 테스트', () => {
         await expect(controllers.createCode(req, res)).rejects.toThrow(BadRequest);
     });
     it('code 삭제', async () => {
-        const req = new FakeRequestBuilder().setParams({ id: 1 }).build();
+        AccessToken.mockImplementation(() => {
+            return {
+                getUserId: () => 1
+            }
+        });
+        AccessToken.issue = jest.fn().mockImplementation(() => new AccessToken);
+
+        const req = new FakeRequestBuilder().setParams({ id: 1 }).setAuth(AccessToken.issue()).build();
         await controllers.deleteCode(req);
 
         const codes = await CodeRepo.findAll();
         expect(codes).toEqual([]);
     });
     it('code 삭제 실패(404) - 해당 code를 찾을 수 없음', async () => {
-        const req = new FakeRequestBuilder().setParams({ id: 2 }).build();
+        AccessToken.mockImplementation(() => {
+            return {
+                getUserId: () => 1
+            }
+        });
+        AccessToken.issue = jest.fn().mockImplementation(() => new AccessToken);
+
+        const req = new FakeRequestBuilder().setParams({ id: 2 }).setAuth(AccessToken.issue()).build();
         await expect(controllers.deleteCode(req)).rejects.toThrow(NotFound);
     });
     it('code 수정', async () => {
