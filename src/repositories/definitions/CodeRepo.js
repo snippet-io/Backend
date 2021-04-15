@@ -1,5 +1,5 @@
-const { Model, DataTypes, DatabaseError } = require('sequelize');
-const { NotFound } = require('../../errors/HttpException');
+const { Model, DataTypes, DatabaseError, Op } = require('sequelize');
+const { NotFound, Forbidden } = require('../../errors/HttpException');
 const { sequelize } = require('../../loaders/database');
 const { CodeBuilder } = require('../../models/Code');
 const Option = require('../../utils/option');
@@ -24,12 +24,12 @@ class CodeRepo {
     static async update(code, transaction) {
         const [ number_of_modified ] = await this.repo.update(ModelToEntity(code), {
             where: {
-                id: code.getId()
+                [Op.and]: [{id: code.getId()}, {author_id: code.getAuthorId()}]
             },
             transaction
         })
         if(number_of_modified <= 0) {
-            throw new NotFound;
+            throw new Forbidden;
         }
     }
     static async delete(code_id, transaction){
