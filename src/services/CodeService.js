@@ -1,3 +1,4 @@
+const { Forbidden, NotFound } = require("../errors/HttpException");
 const { CodeRepo } = require("../repositories");
 
 
@@ -9,6 +10,8 @@ class CodeService {
         await CodeRepo.delete(code_id);
     }
     static async modifyCode(code){
+        (await CodeRepo.findById(code.getId())).orElseThrow(new NotFound);
+        
         await CodeRepo.update(code);
     }
 }
