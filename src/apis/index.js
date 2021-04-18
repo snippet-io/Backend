@@ -5,7 +5,7 @@ const api = Router();
 
 
 api.use('/auth/github', AuthRouter.getExpressRouter());
-api.use('/code', CodeRouter.getExpressRouter());
+api.use('/codes', CodeRouter.getExpressRouter());
 api.get('/simple', (req, res) => {
   res.send('3000');
 });
