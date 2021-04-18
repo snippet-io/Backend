@@ -8,5 +8,6 @@ const router = new Router();
 router.post('/', [AccessTokenExtractor], controller.createCode);
 router.delete('/:id', [AccessTokenExtractor], controller.deleteCode);
 router.put('/:id', [AccessTokenExtractor], controllers.modifyCode);
+router.get('/', controllers.getCodes);
 
 module.exports = router;
