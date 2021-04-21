@@ -41,5 +41,10 @@ controllers.getCodes = async (req) => {
 
     return await CodeService.getCodes(limit, offset);
 };
+controllers.getCode = async (req) => {
+    const id = req.params.id;
+
+    return await CodeService.getCode(id);
+};
 
 module.exports = controllers;
