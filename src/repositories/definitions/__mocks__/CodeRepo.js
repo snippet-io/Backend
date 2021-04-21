@@ -1,11 +1,12 @@
 const { NotFound, Forbidden } = require('../../../errors/HttpException');
 const { CodeBuilder } = require('../../../models/Code');
 const Option = require('../../../utils/option');
+const ServiceTime = require('../../../utils/ServiceTime');
 
 let mocking_code_datas;
 const mock = {};
 mock.mockClear = jest.fn().mockImplementation(() => {
-    mocking_code_datas = [ new CodeBuilder('코드제목', 'rust', 1).setContent('내용').setId(1).setDescription('설명').build() ];
+    mocking_code_datas = [ new CodeBuilder('코드제목', 'rust', 1).setContent('내용').setId(1).setDescription('설명').setCreatedDatetime(new ServiceTime('2021-04-19T00:00:00.000Z')).build() ];
     
 });
 mock.repo = {

@@ -3,6 +3,7 @@ const { NotFound, Forbidden } = require('../../errors/HttpException');
 const { sequelize } = require('../../loaders/database');
 const { CodeBuilder } = require('../../models/Code');
 const Option = require('../../utils/option');
+const ServiceTime = require('../../utils/ServiceTime');
 
 class Repo extends Model { }
 class CodeRepo {
@@ -69,6 +70,7 @@ function EntityToCode(entity) {
         .setContent(entity.content || undefined)
         .setDescription(entity.description || undefined)
         .setId(entity.id)
+        .setCreatedDatetime(new ServiceTime(entity.created_datetime))
         .build();
 }
 function ModelToEntity(model) {
@@ -108,6 +110,9 @@ Repo.init({
     author_id: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    created_datetime: {
+        type: DataTypes.DATE,
     }
 }, {
     sequelize,

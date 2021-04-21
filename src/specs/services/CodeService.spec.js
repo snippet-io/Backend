@@ -4,6 +4,7 @@ const { Forbidden, NotFound } = require('../../errors/HttpException');
 const { CodeBuilder } = require("../../models/Code");
 const { UserRepo, CodeRepo } = require("../../repositories");
 const CodeService = require('../../services/CodeService');
+const ServiceTime = require('../../utils/ServiceTime');
 
 
 describe('Code 서비스 단위 테스트', () => {
@@ -50,6 +51,6 @@ describe('Code 서비스 단위 테스트', () => {
     });
     it('코드 리스트 얻기 성공', async () => {
         const codes = await CodeService.getCodes(5, 0);
-        expect(codes).toEqual([new CodeBuilder('코드제목', 'rust', 1).setContent('내용').setDescription('설명').setId(1).build()]);
+        expect(codes).toEqual([new CodeBuilder('코드제목', 'rust', 1).setContent('내용').setDescription('설명').setId(1).setCreatedDatetime(new ServiceTime('2021-04-19T00:00:00.000Z')).build()]);
     });
 });

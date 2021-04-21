@@ -40,7 +40,8 @@ class Code {
             content: this.content,
             description: this.description,
             language: this.language,
-            author: this.author.id
+            author: this.author.id,
+            created_datetime: this.created_datetime.toString()
         };
     }
 }
@@ -53,6 +54,7 @@ class CodeBuilder extends ModelBuilder{
         this.language = language;
         this.author = { id: author_id };
         this.id = undefined;
+        this.created_datetime = undefined;
     }
     setContent(content) {
         this.content = content;
@@ -68,6 +70,10 @@ class CodeBuilder extends ModelBuilder{
     }
     setAuthor(user) {
         this.author = user;
+        return this;
+    }
+    setCreatedDatetime(datetime) {
+        this.created_datetime = datetime;
         return this;
     }
 }

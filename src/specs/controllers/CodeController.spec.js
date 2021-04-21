@@ -122,7 +122,8 @@ describe('CodeController 단위 테스트', () => {
             content: '내용',
             language: 'rust',
             description: '설명',
-            author: 1
+            author: 1,
+            created_datetime: '2021-04-19T09:00:00.000+09:00'
         }]);
     });
 });

@@ -2,8 +2,9 @@ const { CodeRepo } = require('../../repositories');
 const { CodeBuilder } = require('../../models/Code');
 const { sequelize } = require('../../loaders/database');
 const { NotFound, Forbidden } = require('../../errors/HttpException');
+const ServiceTime = require('../../utils/ServiceTime');
 
-const simple_code_table = [new CodeBuilder('코드제목', 'rust', 1).setContent('내용').setId(1).setDescription('설명').build()];
+const simple_code_table = [new CodeBuilder('코드제목', 'rust', 1).setContent('내용').setId(1).setDescription('설명').setCreatedDatetime(new ServiceTime('2021-04-19T00:00:00Z')).build()];
 
 describe('Code Repo 통합 테스트', () => {
     let transaction;
@@ -36,7 +37,7 @@ describe('Code Repo 통합 테스트', () => {
         const new_code = new CodeBuilder('title', 'language', 1).setContent('content').build();
         await CodeRepo.create(new_code, transaction);
         const codes = await CodeRepo.findAll(transaction);
-        expect(codes.map((code) => {code.id = undefined; return code;})).toContainEqual(new_code);
+        expect(codes.map((code) => {code.id = undefined; code.created_datetime = undefined; return code;})).toContainEqual(new_code);
     });
     it('delete 성공 케이스', async () => {
         await CodeRepo.delete(1, transaction);
@@ -51,7 +52,7 @@ describe('Code Repo 통합 테스트', () => {
         await CodeRepo.update(modified_code, transaction);
 
         const codes = await CodeRepo.findAll(transaction);
-        expect(codes).toEqual([modified_code]);
+        expect(codes.map(code => {code.created_datetime = undefined; return code;})).toEqual([modified_code]);
     });
     it('update 실패 케이스 - 수정 할게 없음', async () => {
         const modified_code = new CodeBuilder('수정된 코드', 'c++', 9).setId(1).setContent('내용').build();
