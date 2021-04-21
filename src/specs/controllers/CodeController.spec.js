@@ -81,6 +81,9 @@ describe('CodeController 단위 테스트', () => {
         const codes = await CodeRepo.findAll();
         expect(codes).toEqual([]);
     });
+    it('code 삭제 실패(400)', async () => {
+        await expect(controllers.deleteCode(new FakeRequestBuilder().build())).rejects.toThrow(BadRequest);
+    });
     it('code 삭제 실패(404) - 해당 code를 찾을 수 없음', async () => {
         AccessToken.mockImplementation(() => {
             return {
@@ -113,6 +116,9 @@ describe('CodeController 단위 테스트', () => {
         const codes = await CodeRepo.findAll();
         expect(codes).toEqual([new CodeBuilder('수정된 코드', 'c++', 1).setContent(undefined).setId(1).build()]);
     });
+    it('code 수정 실패(400)', async () => {
+        await expect(controllers.modifyCode(new FakeRequestBuilder().build())).rejects.toThrow(BadRequest);
+    });
     it('code list 얻기', async () => {
         const req = new FakeRequestBuilder().setQuery({limit: 5, offset: 0});
         const codes = await controllers.getCodes(req, new FakeResponse);
@@ -126,6 +132,9 @@ describe('CodeController 단위 테스트', () => {
             created_datetime: '2021-04-19T09:00:00.000+09:00'
         }]);
     });
+    it('code list 얻기 실패(400)', async () => {
+        await expect(controllers.getCodes(new FakeRequestBuilder().build())).rejects.toThrow(BadRequest);
+    });
     it('code 얻기', async () => {
         const req = new FakeRequestBuilder().setParams({id: 1}).build();
         const result = await controllers.getCode(req);
@@ -138,6 +147,9 @@ describe('CodeController 단위 테스트', () => {
             description: '설명',
             created_datetime: '2021-04-19T09:00:00.000+09:00'
         });
+    });
+    it('code 얻기 실패(400)', async () => {
+        await expect(controllers.getCode(new FakeRequestBuilder().build())).rejects.toThrow(BadRequest);
     });
 });
 
