@@ -25,6 +25,9 @@ class CodeService {
     static async getCodes(limit, offset) {
         return await CodeRepo.findAllLimitedTo(limit, offset);
     }
+    static async getCode(id) {
+        return await (await CodeRepo.findById(id)).orElseThrow(new NotFound);
+    }
 }
 
 module.exports = CodeService;
