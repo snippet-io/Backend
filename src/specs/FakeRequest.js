@@ -1,10 +1,10 @@
 class FakeRequest {
     constructor(data) {
-        this.body = data.body;
-        this.params = data.params;
-        this.auth = data.auth;
-        this.header = data.header;
-        this.query = data.query;
+        this.body = data.body || {};
+        this.params = data.params || {};
+        this.auth = data.auth || {};
+        this.header = data.header || {};
+        this.query = data.query || {};
     }
     get(attribute) {
         return this.header[attribute];
