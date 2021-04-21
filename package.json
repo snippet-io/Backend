@@ -10,6 +10,7 @@
     "test-controller": "jest src/specs/controllers",
     "test-service": "jest src/specs/services",
     "test-middleware": "jest src/specs/middlewares",
+    "test-util": "jest src/specs/utils",
     "cover": "jest src/specs --coverage"
   },
   "repository": {
