@@ -4,11 +4,18 @@ const { CodeBuilder } = require('../models/Code');
 const { AccessToken } = require('../authentication');
 const controllers = {};
 
+const Joi = require('joi');
+
 controllers.createCode = async (req, res) => {
     const access_token = req.auth;
     const { title, content, language, description } = req.body;
-
-    if( !title || !content || !language) {
+    const schema = Joi.object({
+        title: Joi.string().required(),
+        content: Joi.string().required(),
+        language: Joi.string().required(),
+        description: Joi.string()
+    });
+    if (schema.validate(req.body).error) {
         throw new BadRequest;
     }
 
@@ -18,12 +25,33 @@ controllers.createCode = async (req, res) => {
     res.status(201);
 };
 controllers.deleteCode = async (req) => {
+    const schema = Joi.object({ id: Joi.number().required() });
+    if(schema.validate(req.params).error) {
+        throw new BadRequest;
+    }
+    
     const code_id = req.params.id;
     const auth_id = req.auth.getUserId();
 
     await CodeService.deleteCode(code_id, auth_id);
 };
 controllers.modifyCode = async (req) => {
+    const schema = Joi.object({
+        params: Joi.object({
+            id: Joi.number().required()
+        }),
+        body: Joi.object({
+            title: Joi.string().required(),
+            content: Joi.string().required(),
+            language: Joi.string().required(),
+            description: Joi.string()
+        })
+    });
+
+    if(schema.validate({ params: req.params, body: req.body}).error) {
+        throw new BadRequest;
+    }
+
     const access_token = req.auth;
     const code_id = req.params.id;
     const code_data = req.body;
@@ -37,6 +65,15 @@ controllers.modifyCode = async (req) => {
     await CodeService.modifyCode(modified_code);
 };
 controllers.getCodes = async (req) => {
+    const schema = Joi.object({
+        limit: Joi.number().required(),
+        offset: Joi.number().required()
+    });
+
+    if (schema.validate(req.query).error) {
+        throw new BadRequest;
+    }
+
     const { limit, offset } = req.query;
 
     return await CodeService.getCodes(limit, offset);
@@ -44,6 +81,12 @@ controllers.getCodes = async (req) => {
 controllers.getCode = async (req) => {
     const id = req.params.id;
 
+    const schema = Joi.object({
+            id: Joi.number().required()
+    });
+    if(schema.validate(req.params).error) {
+        throw new BadRequest;
+    }
     return await CodeService.getCode(id);
 };
 
