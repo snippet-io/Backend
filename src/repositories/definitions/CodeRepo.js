@@ -25,6 +25,25 @@ class CodeRepo {
         const codes = code_entities.map(EntityToCode);
         return codes;
     }
+    static async findAllLikeTitleOrContentLimitedTo(search, limit, offset, transaction) {
+        limit = parseInt(limit);
+        offset = parseInt(offset);
+
+        const code_entities = await this.repo.findAll({
+            where: {
+                [Op.or]: [ 
+                    { title: { [Op.like]: '%'+search+'%'}}, 
+                    { content: { [Op.like]: '%'+search+'%'}}
+                ]
+            },
+            limit,
+            offset,
+            transaction
+        });
+
+        const codes = code_entities.map(EntityToCode);
+        return codes;
+    }
     static async findById(id, transaction) {
         const code_entity = await this.repo.findByPk(id, {transaction});
         const code = code_entity? Option.some(EntityToCode(code_entity)) : Option.none;
