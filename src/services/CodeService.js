@@ -28,6 +28,10 @@ class CodeService {
     static async getCode(id) {
         return await (await CodeRepo.findById(id)).orElseThrow(new NotFound);
     }
+    static async searchCodeWithPaging(search, limit, offset) {
+        const codes = await CodeRepo.findAllLikeTitleOrContentLimitedTo(search, limit, offset);
+        return codes;
+    }
 }
 
 module.exports = CodeService;
