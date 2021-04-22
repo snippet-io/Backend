@@ -151,5 +151,26 @@ describe('CodeController 단위 테스트', () => {
     it('code 얻기 실패(400)', async () => {
         await expect(controllers.getCode(new FakeRequestBuilder().build())).rejects.toThrow(BadRequest);
     });
+    it('code 검색 성공', async () => {
+        const req = new FakeRequestBuilder().setQuery({
+            limit: 5,
+            offset: 0,
+            search: '내'
+        }).build();
+        const codes = await controllers.searchCode(req);
+        expect(codes.map(code => code.toJSON())).toEqual([{
+            id: 1,
+            title: '코드제목',
+            author: 1,
+            language: 'rust',
+            content: '내용',
+            description: '설명',
+            created_datetime: '2021-04-19T09:00:00.000+09:00'
+        }]);
+    });
+    it('code 검색 실패(400)', async () => {
+        const req = new FakeRequestBuilder().build();
+        await expect(controllers.searchCode(req)).rejects.toThrow(BadRequest);
+    });
 });
 
