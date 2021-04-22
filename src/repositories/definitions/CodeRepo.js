@@ -15,6 +15,8 @@ class CodeRepo {
         return codes;
     }
     static async findAllLimitedTo(limit, offset, transaction) {
+        limit = parseInt(limit);
+        offset = parseInt(offset);
         const code_entities = await this.repo.findAll({
             limit,
             offset,
