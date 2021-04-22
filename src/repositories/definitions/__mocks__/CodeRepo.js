@@ -69,4 +69,10 @@ mock.findAllLimitedTo = jest.fn()
     .mockImplementation((limit, offset) => {
         return mocking_code_datas.slice(offset, offset + limit);
     });
+mock.findAllLikeTitleOrContentLimitedTo = jest.fn()
+    .mockImplementation((search, limit, offset) => {
+        mocking_code_datas = mocking_code_datas.filter((code) => code.getTitle().indexOf(search) != -1 || code.getContent().indexOf(search) != -1);
+        return mocking_code_datas.slice(offset, offset + limit);
+    });
+
 module.exports = mock;
