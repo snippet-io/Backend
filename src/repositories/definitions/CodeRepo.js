@@ -29,10 +29,10 @@ class CodeRepo {
         return code;
     }
     async create(code, ...args) {
-        await CodeRepo.repo.create(ModelToEntity(code), ...Array.from(args));
+        await CodeRepo.repo.scope(...this.scopes).create(ModelToEntity(code), ...Array.from(args));
     }
     async update(code, option) {
-        const [ number_of_modified ] = await CodeRepo.repo.update(ModelToEntity(code), {
+        const [ number_of_modified ] = await CodeRepo.repo.scope(...this.scopes).update(ModelToEntity(code), {
             where: {
                id: code.getId()
             },
@@ -41,7 +41,7 @@ class CodeRepo {
         return number_of_modified;
     } 
     async destroy(code_id, option){
-        const number_of_destroyed = await CodeRepo.repo.destroy({
+        const number_of_destroyed = await CodeRepo.repo.scope(...this.scopes).destroy({
             where: {
                 id: code_id
             },
