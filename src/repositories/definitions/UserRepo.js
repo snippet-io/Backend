@@ -1,20 +1,12 @@
 const { Model, DataTypes } = require('sequelize');
 const { sequelize } = require('../../loaders/database');
 const { UserBuilder } = require('../../models/User');
+const CustomRepo = require('./CustomRepo');
 
 class Repo extends Model { }
-class UserRepo {
+class UserRepo extends CustomRepo{
     static repo = Repo;
 
-    static addScope() {
-        return this.repo.addScope(...arguments);
-    }
-    static scope() {
-        const instance = new this;
-        instance.scopes = arguments;
-        return instance;
-    }
-    
     async findAll(...args) {
         const user_entities = await UserRepo.repo.scope(...this.scopes).findAll(...Array.from(args));
         const users = user_entities.map(EntityToUser);

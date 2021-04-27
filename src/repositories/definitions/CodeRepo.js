@@ -4,19 +4,11 @@ const { sequelize } = require('../../loaders/database');
 const { CodeBuilder } = require('../../models/Code');
 const Option = require('../../utils/option');
 const ServiceTime = require('../../utils/ServiceTime');
+const CustomRepo = require('./CustomRepo');
 
 class Repo extends Model { }
-class CodeRepo {
+class CodeRepo extends CustomRepo{
     static repo = Repo;
-    
-    static addScope() {
-        return CodeRepo.repo.addScope(...arguments);
-    }
-    static scope() {
-        const instance = new CodeRepo();
-        instance.scopes = arguments;
-        return instance;
-    }
     
     async findAll(...args) {
         const code_entities = await CodeRepo.repo.scope(...this.scopes).findAll(...Array.from(args));
