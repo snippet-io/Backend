@@ -28,4 +28,8 @@ describe('User Repo 통합 테스트', () => {
         // const users = await UserRepo.findAll(transaction);
         expect(users).toContainEqual(new_user);
     });
+    it('findByPk 성공 케이스', async () => {
+        const user = await new UserQueryBuilder().findByPk(1).excute(transaction);
+        expect(user).toEqual(simple_user_table[0]);
+    });
 });
