@@ -168,5 +168,22 @@ describe('CodeController 단위 테스트', () => {
             created_datetime: '2021-04-19T09:00:00.000+09:00'
         }]);
     });
+    it('code 언어로 얻기', async () => {
+        const req = new FakeRequestBuilder().setQuery({
+            limit: 5,
+            offset: 0,
+            language: 'rust'
+        }).build();
+        const codes = await controllers.getCodes(req);
+        expect(codes.map(code => code.toJSON())).toEqual([{
+            id: 1,
+            title: '코드제목',
+            author: 1,
+            language: 'rust',
+            content: '내용',
+            description: '설명',
+            created_datetime: '2021-04-19T09:00:00.000+09:00'
+        }]);
+    });
 });
 
