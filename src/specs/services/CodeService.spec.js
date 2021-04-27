@@ -1,9 +1,6 @@
-require('../util').mockAllRepo();
 jest.mock('../../querybuilders/Code');
-
 const { Forbidden, NotFound } = require('../../errors/HttpException');
 const { CodeBuilder } = require("../../models/Code");
-const { UserRepo, CodeRepo } = require("../../repositories");
 const CodeService = require('../../services/CodeService');
 const ServiceTime = require('../../utils/ServiceTime');
 const CodeQueryBuilder = require('../../querybuilders/Code');
@@ -12,8 +9,6 @@ const sample_code = new CodeBuilder('코드제목', 'rust', 1).setContent('내�
 
 describe('Code 서비스 단위 테스트', () => {
     beforeEach(() => {
-        UserRepo.mockClear();
-        CodeRepo.mockClear();
         CodeQueryBuilder.mockClear();
     });
     it('코드 생성 성공', async () => {

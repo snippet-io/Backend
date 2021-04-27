@@ -1,4 +1,3 @@
-require('../util').mockAllRepo();
 jest.mock('../../querybuilders/Code');
 jest.mock('../../external/GithubApp');
 jest.mock('../../authentication');
@@ -7,15 +6,12 @@ const { AccessToken } = require('../../authentication');
 const controllers = require('../../controllers/CodeController');
 const { BadRequest, NotFound } = require('../../errors/HttpException');
 const { CodeBuilder } = require('../../models/Code');
-const { UserRepo, CodeRepo } = require('../../repositories');
 const FakeRequestBuilder = require('../FakeRequest');
 const FakeResponse = require('../FakeResponse');
 const CodeQueryBuilder = require('../../querybuilders/Code');
 
 describe('CodeController 단위 테스트', () => {
     beforeEach(() => {
-        UserRepo.mockClear();
-        CodeRepo.mockClear();
         CodeQueryBuilder.mockClear();
     });
     
