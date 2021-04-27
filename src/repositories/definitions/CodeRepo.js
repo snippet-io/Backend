@@ -44,7 +44,7 @@ class CodeRepo extends CustomRepo{
 }
 function EntityToCode(entity) {
     return new CodeBuilder(entity.title, entity.language, entity.author_id)
-        .setContent(entity.content || undefined)
+        .setContent(entity.content)
         .setDescription(entity.description || undefined)
         .setId(entity.id)
         .setCreatedDatetime(new ServiceTime(entity.created_datetime))
