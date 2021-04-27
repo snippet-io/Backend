@@ -157,7 +157,7 @@ describe('CodeController 단위 테스트', () => {
             offset: 0,
             search: '내'
         }).build();
-        const codes = await controllers.searchCode(req);
+        const codes = await controllers.getCodes(req);
         expect(codes.map(code => code.toJSON())).toEqual([{
             id: 1,
             title: '코드제목',
@@ -167,10 +167,6 @@ describe('CodeController 단위 테스트', () => {
             description: '설명',
             created_datetime: '2021-04-19T09:00:00.000+09:00'
         }]);
-    });
-    it('code 검색 실패(400)', async () => {
-        const req = new FakeRequestBuilder().build();
-        await expect(controllers.searchCode(req)).rejects.toThrow(BadRequest);
     });
 });
 

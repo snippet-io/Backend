@@ -54,7 +54,9 @@ describe('Code 서비스 단위 테스트', () => {
         await expect(CodeService.modifyCode(modified_code)).rejects.toThrow(NotFound);
     });
     it('코드 리스트 얻기 성공', async () => {
-        const codes = await CodeService.getCodes(5, 0);
+        const codes = await CodeService.getCodes({
+            pagination: { limit: 5, offset: 0}
+        });
         expect(codes).toEqual([new CodeBuilder('코드제목', 'rust', 1).setContent('내용').setDescription('설명').setId(1).setCreatedDatetime(new ServiceTime('2021-04-19T00:00:00.000Z')).build()]);
     });
     it('코드 얻기 성공', async () => {
@@ -65,7 +67,10 @@ describe('Code 서비스 단위 테스트', () => {
         expect(CodeService.getCode(999)).rejects.toThrow(NotFound);
     });
     it('코드 검색 성공', async () => {
-        const codes = await CodeService.searchCodeWithPaging('내', 5, 0);
+        const codes = await CodeService.getCodes({
+            search: '내',
+            pagination: { limit: 5, offset: 0}
+        });
         expect(codes).toEqual([sample_code]);
     });
 });

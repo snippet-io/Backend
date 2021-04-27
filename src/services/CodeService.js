@@ -27,15 +27,20 @@ class CodeService {
             throw new Forbidden;
         }
     }
-    static async getCodes(limit, offset) {
-        return await new CodeQueryBuilder().findAll().paginate(limit, offset).excute();
+    static async getCodes(option) {
+        let query = new CodeQueryBuilder().findAll();
+        
+        if(option.search) {
+            query = query.searchOnTitleAndContent(option.search);
+        }
+        if(option.pagination) {
+            query = query.paginate(option.pagination.limit, option.pagination.offset);
+        }
+
+        return await query.excute();
     }
     static async getCode(id) {
         return (await new CodeQueryBuilder().findByPk(id).excute()).orElseThrow(new NotFound);
-    }
-    static async searchCodeWithPaging(search, limit, offset) {
-        const codes = await (new CodeQueryBuilder().findAll().searchOnTitleAndContent(search).paginate(limit, offset).excute());
-        return codes;
     }
 }
 
