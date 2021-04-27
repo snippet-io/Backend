@@ -1,9 +1,17 @@
 const QueryBuilderMaker = require('@yeoul/sequelize-querybuilder');
-const { UserRepo } = require('../repositories');
+const { UserRepo, CodeRepo } = require('../repositories');
 const { Op } = require('sequelize');
 
 class UserQueryScopes {
     static repo = UserRepo;
+
+    includeCode() {
+        return {
+            include: [
+                { model: CodeRepo.repo, as: 'codes' }
+              ]
+        };
+    }
 }
 
 
