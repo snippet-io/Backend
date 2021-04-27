@@ -1,6 +1,8 @@
 const { Model, DataTypes } = require('sequelize');
 const { sequelize } = require('../../loaders/database');
+const { CodeBuilder } = require('../../models/Code');
 const { UserBuilder } = require('../../models/User');
+const ServiceTime = require('../../utils/ServiceTime');
 const CustomRepo = require('./CustomRepo');
 
 class Repo extends Model { }
@@ -25,9 +27,22 @@ class UserRepo extends CustomRepo{
     }
 }
 function EntityToUser(entity) {
-    return new UserBuilder(entity.id).build();
+    const user = new UserBuilder(entity.id).build();
+    if(entity.codes) {
+        entity.codes.forEach(code_entity => {
+            user.addCode(EntityToCode(code_entity));
+        });
+    }
+    return user;
 }
-
+function EntityToCode(entity) {
+    return new CodeBuilder(entity.title, entity.language, entity.author_id)
+        .setContent(entity.content)
+        .setDescription(entity.description || undefined)
+        .setId(entity.id)
+        .setCreatedDatetime(new ServiceTime(entity.created_datetime))
+        .build();
+}
 Repo.init({
     id: {
         type: DataTypes.INTEGER,
