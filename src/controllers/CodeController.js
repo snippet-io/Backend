@@ -68,16 +68,18 @@ controllers.getCodes = async (req) => {
     const schema = Joi.object({
         limit: Joi.number().required(),
         offset: Joi.number().required(),
-        search: Joi.string()
+        search: Joi.string(),
+        language: Joi.string()
     });
 
     if (schema.validate(req.query).error) {
         throw new BadRequest;
     }
 
-    const { limit, offset, search } = req.query;
+    const { limit, offset, search, language } = req.query;
 
     return await CodeService.getCodes({
+        language,
         search,
         pagination: { limit: Number(limit), offset: Number(offset) }
     });
