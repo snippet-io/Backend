@@ -2,7 +2,7 @@ const { Model, DataTypes, DatabaseError, Op } = require('sequelize');
 const { NotFound, Forbidden } = require('../../errors/HttpException');
 const { sequelize } = require('../../loaders/database');
 const { CodeBuilder } = require('../../models/Code');
-const Option = require('../../utils/option');
+const Option = require('js-option');
 const ServiceTime = require('../../utils/ServiceTime');
 const CustomRepo = require('./CustomRepo');
 

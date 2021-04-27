@@ -1,7 +1,7 @@
 
 const { NotFound } = require('../../errors/HttpException');
 const { CodeBuilder } = require('../../models/Code');
-const Option = require('../../utils/option');
+const Option = require('js-option');
 const ServiceTime = require('../../utils/ServiceTime');
 
 
