@@ -76,7 +76,7 @@ controllers.getCodes = async (req) => {
 
     const { limit, offset } = req.query;
 
-    return await CodeService.getCodes(limit, offset);
+    return await CodeService.getCodes(Number(limit), Number(offset));
 };
 controllers.getCode = async (req) => {
     const id = req.params.id;
@@ -101,7 +101,7 @@ controllers.searchCode = async (req) => {
     }
     
     const { limit, offset, search } = req.query;
-    return await CodeService.searchCodeWithPaging(search, limit, offset);
+    return await CodeService.searchCodeWithPaging(search, Number(limit), Number(offset));
 };
 
 module.exports = controllers;
