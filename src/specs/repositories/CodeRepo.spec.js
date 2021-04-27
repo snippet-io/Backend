@@ -44,6 +44,10 @@ describe('Code Repo 통합 테스트', () => {
         const result = await new CodeQueryBuilder().findByPk(1).excute(transaction);
         expect(result.orElseThrow(new Error)).toEqual(simple_code_table[0]);
     });
+    it('findByPk 테스트 - 내용 없음', async () => {
+        const result = await new CodeQueryBuilder().findByPk(999).excute(transaction);
+        expect(() => result.orElseThrow(new Error)).toThrow();
+    });
     it('create 테스트', async () => {
         const new_code = new CodeBuilder('title', 'language', 1).setContent('content').build();
         const query = new CodeQueryBuilder();
