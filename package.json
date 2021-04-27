@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/snippet-io/Backend#readme",
   "dependencies": {
+    "@yeoul/sequelize-querybuilder": "^1.0.4",
     "axios": "^0.21.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
