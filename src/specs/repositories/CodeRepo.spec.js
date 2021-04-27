@@ -24,6 +24,22 @@ describe('Code Repo 통합 테스트', () => {
         const result = await new CodeQueryBuilder().findAll().paginate(5, 0).excute(transaction);
         expect(result).toEqual(simple_code_table);
     });
+    it('search 테스트', async () => {
+        const result = await new CodeQueryBuilder().findAll().searchOnTitleAndContent('내').excute(transaction);
+        expect(result).toEqual(simple_code_table);
+    });
+    it('filterByAuthorId 테스트', async () => {
+        const result = await new CodeQueryBuilder().findAll().filterByAuthorId(1).excute(transaction);
+        expect(result).toEqual(simple_code_table);
+    });
+    it('filterById 테스트', async () => {
+        const result = await new CodeQueryBuilder().findAll().filterById(1).excute(transaction);
+        expect(result).toEqual(simple_code_table);
+    });
+    it('filterByLanguage 테스트', async () => {
+        const result = await new CodeQueryBuilder().findAll().filterByLanguage('rust').excute(transaction);
+        expect(result).toEqual(simple_code_table);
+    });
     it('findByPk 테스트', async () => {
         const result = await new CodeQueryBuilder().findByPk(1).excute(transaction);
         expect(result.orElseThrow(new Error)).toEqual(simple_code_table[0]);
