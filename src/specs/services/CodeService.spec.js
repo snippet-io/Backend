@@ -73,4 +73,10 @@ describe('Code 서비스 단위 테스트', () => {
         });
         expect(codes).toEqual([sample_code]);
     });
+    it('코드 언어로 필터링', async () => {
+        const codes = await CodeService.getCodes({
+            language: 'rust'
+        });
+        expect(codes).toEqual([sample_code]);
+    });
 });
