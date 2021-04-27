@@ -1,13 +1,11 @@
 jest.mock('../../external/GithubApp');
 jest.mock('../../configs');
 jest.mock('../../querybuilders/User');
-require('../util').mockAllRepo();
 process.env.TOKEN_SECRET = 'token_secret';
 jest.spyOn(Date, 'now').mockImplementation(() => 1616466983480);
 
 const AuthService = require("../../services/AuthService");
 
-const { UserRepo } = require('../../repositories');
 const { UserBuilder } = require("../../models/User");
 const GithubApp = require("../../external/GithubApp");
 const GithubAppException = require("../../errors/GithubAppException");
@@ -20,7 +18,6 @@ describe('AuthService 단위 테스트', () => {
 
     describe('createAccessToken', () => {
         beforeEach(() => {
-            UserRepo.mockClear();
             UserQueryBuilder.mockClear();
             GithubApp.mockClear();
         });

@@ -1,5 +1,4 @@
 jest.mock('../../external/GithubApp');
-require('../util').mockAllRepo();
 jest.spyOn(Date, 'now').mockImplementation(() => 1616466983480);
 jest.mock('../../configs');
 jest.mock('../../querybuilders/User');
@@ -10,13 +9,11 @@ const FakeRequestBuilder = require('../FakeRequest');
 const FakeResponse = require('../FakeResponse');
 
 const GithubApp = require('../../external/GithubApp');
-const { UserRepo } = require('../../repositories');
 const { BadRequest } = require('../../errors/HttpException');
 const UserQueryBuilder = require('../../querybuilders/User');
 
 describe('AuthController 단위 테스트', () => {
     beforeEach(async () => {
-        UserRepo.mockClear();
         UserQueryBuilder.mockClear();
         GithubApp.mockClear();
     });

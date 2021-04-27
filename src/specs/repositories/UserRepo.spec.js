@@ -1,4 +1,3 @@
-const { UserRepo } = require('../../repositories');
 const { UserBuilder } = require('../../models/User');
 const { sequelize } = require('../../loaders/database');
 const UserQueryBuilder = require('../../querybuilders/User');
