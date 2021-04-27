@@ -13,6 +13,11 @@ class UserRepo extends CustomRepo{
         return users;
     }
 
+    async findByPk(id, ...args) {
+        const user_entity = await UserRepo.repo.scope(...this.scopes).findByPk(id, ...Array.from(args));
+        const user = EntityToUser(user_entity);
+        return user;
+    }
     async create(user, ...args) {
         await UserRepo.repo.scope(...this.scopes).create({
             id: user.getId()
