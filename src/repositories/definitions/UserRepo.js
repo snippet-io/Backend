@@ -5,17 +5,26 @@ const { UserBuilder } = require('../../models/User');
 class Repo extends Model { }
 class UserRepo {
     static repo = Repo;
+
+    static addScope() {
+        return this.repo.addScope(...arguments);
+    }
+    static scope() {
+        const instance = new this;
+        instance.scopes = arguments;
+        return instance;
+    }
     
-    static async findAll(transaction) {
-        const user_entities = await this.repo.findAll({transaction});
+    async findAll(...args) {
+        const user_entities = await UserRepo.repo.scope(...this.scopes).findAll(...Array.from(args));
         const users = user_entities.map(EntityToUser);
         return users;
     }
 
-    static async create(user, transaction) {
-        await this.repo.create({
+    async create(user, ...args) {
+        await UserRepo.repo.scope(...this.scopes).create({
             id: user.getId()
-        }, { transaction });
+        }, ...Array.from(args));
     }
 }
 function EntityToUser(entity) {
