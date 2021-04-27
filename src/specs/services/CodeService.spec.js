@@ -1,10 +1,12 @@
 require('../util').mockAllRepo();
+jest.mock('../../querybuilders/Code');
 
 const { Forbidden, NotFound } = require('../../errors/HttpException');
 const { CodeBuilder } = require("../../models/Code");
 const { UserRepo, CodeRepo } = require("../../repositories");
 const CodeService = require('../../services/CodeService');
 const ServiceTime = require('../../utils/ServiceTime');
+const CodeQueryBuilder = require('../../querybuilders/Code');
 
 const sample_code = new CodeBuilder('코드제목', 'rust', 1).setContent('내용').setDescription('설명').setId(1).setCreatedDatetime(new ServiceTime('2021-04-19T00:00:00.000Z')).build();
 
@@ -12,21 +14,22 @@ describe('Code 서비스 단위 테스트', () => {
     beforeEach(() => {
         UserRepo.mockClear();
         CodeRepo.mockClear();
+        CodeQueryBuilder.mockClear();
     });
     it('코드 생성 성공', async () => {
         const new_code = new CodeBuilder('title', 'language', 1).setContent('content').build();
         await CodeService.createCode(new_code);
 
-        const codes = await CodeRepo.findAll();
-        new_code.content = undefined;
+        const codes = await new CodeQueryBuilder().findAll().excute();
         expect(codes.map((code) => {
             code.id = undefined;
+            code.created_datetime = undefined;
             return code;
         })).toContainEqual(new_code);
     });
     it('코드 삭제 성공', async () => {
         await CodeService.deleteCode(1, 1);
-        const codes = await CodeRepo.findAll();
+        const codes = await new CodeQueryBuilder().findAll().excute();
         expect(codes).toEqual([]);
     });
     it('코드 삭제 실패 - 코드의 작성자 불일치', async () => {
@@ -39,8 +42,13 @@ describe('Code 서비스 단위 테스트', () => {
         const modified_code = new CodeBuilder('수정된 코드', 'c++', 1).setId(1).build();
         await CodeService.modifyCode(modified_code);
 
-        const codes = await CodeRepo.findAll();
-        expect(codes).toEqual([modified_code]);
+        const result = await new CodeQueryBuilder().findAll().excute().map(c => {
+            c.created_datetime = undefined;
+            c.description = undefined;
+            c.content = undefined;
+            return c;
+        });
+        expect(result).toEqual([modified_code]);
     });
     it('코드 업데이트 실패 - 코드의 작성자 불일치', async ()=> {
         const modified_code = new CodeBuilder('수정된 코드', 'c++', 5).setId(1).build();

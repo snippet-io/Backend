@@ -9,81 +9,45 @@ class Repo extends Model { }
 class CodeRepo {
     static repo = Repo;
     
-    static async findAll(transaction) {
-        const code_entities = await this.repo.findAll({transaction});
+    static addScope() {
+        return CodeRepo.repo.addScope(...arguments);
+    }
+    static scope() {
+        const instance = new CodeRepo();
+        instance.scopes = arguments;
+        return instance;
+    }
+    
+    async findAll(...args) {
+        const code_entities = await CodeRepo.repo.scope(...this.scopes).findAll(...Array.from(args));
         const codes = code_entities.map(EntityToCode);
         return codes;
     }
-    static async findAllLimitedTo(limit, offset, transaction) {
-        limit = parseInt(limit);
-        offset = parseInt(offset);
-        const code_entities = await this.repo.findAll({
-            limit,
-            offset,
-            transaction
-        });
-        const codes = code_entities.map(EntityToCode);
-        return codes;
-    }
-    static async findAllLikeTitleOrContentLimitedTo(search, limit, offset, transaction) {
-        limit = parseInt(limit);
-        offset = parseInt(offset);
-
-        const code_entities = await this.repo.findAll({
-            where: {
-                [Op.or]: [ 
-                    { title: { [Op.like]: '%'+search+'%'}}, 
-                    { content: { [Op.like]: '%'+search+'%'}}
-                ]
-            },
-            limit,
-            offset,
-            transaction
-        });
-
-        const codes = code_entities.map(EntityToCode);
-        return codes;
-    }
-    static async findById(id, transaction) {
-        const code_entity = await this.repo.findByPk(id, {transaction});
+    async findByPk(id, ...args) {
+        const code_entity = await CodeRepo.repo.findByPk(id, ...Array.from(args));
         const code = code_entity? Option.some(EntityToCode(code_entity)) : Option.none;
         return code;
     }
-    static async create(code, transaction) {
-        await this.repo.create(ModelToEntity(code), { transaction });
+    async create(code, ...args) {
+        await CodeRepo.repo.create(ModelToEntity(code), ...Array.from(args));
     }
-    static async update(code, transaction) {
-        const [ number_of_modified ] = await this.repo.update(ModelToEntity(code), {
+    async update(code, option) {
+        const [ number_of_modified ] = await CodeRepo.repo.update(ModelToEntity(code), {
             where: {
-                [Op.and]: [{id: code.getId()}, {author_id: code.getAuthorId()}]
+               id: code.getId()
             },
-            transaction
+            transaction: option.transaction
         })
-        if(number_of_modified <= 0) {
-            throw new Forbidden;
-        }
-    }
-    static async delete(code_id, transaction){
-        const number_of_destroyed = await this.repo.destroy({
+        return number_of_modified;
+    } 
+    async destroy(code_id, option){
+        const number_of_destroyed = await CodeRepo.repo.destroy({
             where: {
                 id: code_id
             },
-            transaction
+            transaction: option.transaction
         });
-        if (number_of_destroyed <= 0) {
-            throw new NotFound;
-        }
-    }
-    static async findByAuthorId(author_id, transaction) {
-        const code_entities = await this.repo.findAll({
-            where: {
-                author_id: author_id
-            },
-            transaction
-        });
-
-        const codes = code_entities.map(entity => EntityToCode(entity));
-        return codes;
+        return number_of_destroyed;
     }
 }
 function EntityToCode(entity) {

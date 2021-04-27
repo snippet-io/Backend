@@ -1,4 +1,5 @@
 require('../util').mockAllRepo();
+jest.mock('../../querybuilders/Code');
 jest.mock('../../external/GithubApp');
 jest.mock('../../authentication');
 
@@ -9,13 +10,13 @@ const { CodeBuilder } = require('../../models/Code');
 const { UserRepo, CodeRepo } = require('../../repositories');
 const FakeRequestBuilder = require('../FakeRequest');
 const FakeResponse = require('../FakeResponse');
+const CodeQueryBuilder = require('../../querybuilders/Code');
 
 describe('CodeController 단위 테스트', () => {
     beforeEach(() => {
         UserRepo.mockClear();
         CodeRepo.mockClear();
-
-
+        CodeQueryBuilder.mockClear();
     });
     
     it('code 생성', async () => {
@@ -38,13 +39,13 @@ describe('CodeController 단위 테스트', () => {
         const res = new FakeResponse;
         await controllers.createCode(req, res);
 
-        const codes = await CodeRepo.findAll();
+        const codes = await new CodeQueryBuilder().findAll().excute();
         const expected_new_code = new CodeBuilder('title', 'language', 1).setContent('content').setDescription('description').build();
-        expected_new_code.content = undefined;
         expected_new_code.description = undefined;
         expect(codes.map((code) => {
             code.id = undefined;
             code.description = undefined;
+            code.created_datetime = undefined;
             return code;
         })).toContainEqual(expected_new_code);
         expect(res.getStatus()).toBe(201);
@@ -78,7 +79,7 @@ describe('CodeController 단위 테스트', () => {
         const req = new FakeRequestBuilder().setParams({ id: 1 }).setAuth(AccessToken.issue()).build();
         await controllers.deleteCode(req);
 
-        const codes = await CodeRepo.findAll();
+        const codes = await new CodeQueryBuilder().findAll().excute();
         expect(codes).toEqual([]);
     });
     it('code 삭제 실패(400)', async () => {
@@ -113,8 +114,11 @@ describe('CodeController 단위 테스트', () => {
             }).build();
         await controllers.modifyCode(req, new FakeResponse);
         
-        const codes = await CodeRepo.findAll();
-        expect(codes).toEqual([new CodeBuilder('수정된 코드', 'c++', 1).setContent(undefined).setId(1).build()]);
+        const codes = await new CodeQueryBuilder().findAll().excute();
+        expect(codes.map(code => {
+            code.created_datetime = undefined;
+            return code;
+        })).toEqual([new CodeBuilder('수정된 코드', 'c++', 1).setContent('내').setDescription('설명').setId(1).build()]);
     });
     it('code 수정 실패(400)', async () => {
         await expect(controllers.modifyCode(new FakeRequestBuilder().build())).rejects.toThrow(BadRequest);
