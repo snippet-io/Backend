@@ -3,6 +3,7 @@ const { AccessToken } = require('../authentication');
 const { UserBuilder } = require('../models/User');
 const { UserRepo } = require('../repositories');
 const { BadVerificationCode, Unauthorized } = require('../errors/HttpException');
+const UserQueryBuilder = require('../querybuilders/User');
 
 class AuthService {
     static async createAccessToken(user_code) {
@@ -17,7 +18,8 @@ class AuthService {
         
         const access_token = await AccessToken.issue(oauth_token);
         const user = new UserBuilder(access_token.user_id).build();
-        UserRepo.create(user);
+        // UserRepo.create(user);
+        await new UserQueryBuilder().create(user).excute();
 
         return access_token;
     }
