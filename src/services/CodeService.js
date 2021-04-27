@@ -30,6 +30,9 @@ class CodeService {
     static async getCodes(option) {
         let query = new CodeQueryBuilder().findAll();
         
+        if(option.language) {
+            query = query.filterByLanguage(option.language);
+        }
         if(option.search) {
             query = query.searchOnTitleAndContent(option.search);
         }
