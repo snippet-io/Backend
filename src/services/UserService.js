@@ -13,7 +13,8 @@ class CodeService {
         const github = new GithubApp();
         const stored_user = await new UserQueryBuilder().findByPk(user_id).excute();
         
-        const user_data = await github.getUser(stored_user.getName());
+        let user_data = await github.getUserById(stored_user.getId());
+        user_data = await github.getUser(user_data.login);
         return {
             id: user_data.id,
             name: user_data.name,
