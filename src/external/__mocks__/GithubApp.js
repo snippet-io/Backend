@@ -8,7 +8,8 @@ const issueAccessToken = jest.fn().mockImplementation(() => {
 });
 const getUser = jest.fn().mockImplementation(() => {
     return {
-        id: 5
+        id: 5,
+        login: 'Jungwoo-Son'
     };
 });
 const mock = jest.fn().mockImplementation(() => {
