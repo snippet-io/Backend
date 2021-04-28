@@ -1,13 +1,16 @@
 const { Forbidden, NotFound } = require("../errors/HttpException");
 const GithubApp = require("../external/GithubApp");
+const CodeQueryBuilder = require("../querybuilders/Code");
 const UserQueryBuilder = require("../querybuilders/User");
 
 
 class CodeService {
-    static async getCodesOfUser(user_id) {
-        const query = new UserQueryBuilder();
-        const user = query.findByPk(user_id).includeCode().excute();
-        return user.codes;
+    static async getCodesOfUser(user_id, option) {
+        let query = new CodeQueryBuilder();
+        query = query.findAll().filterByAuthorId(user_id);
+
+        const user_codes = query.excute();
+        return user_codes;
     }
     static async getUser(user_id) {
         const github = new GithubApp();
