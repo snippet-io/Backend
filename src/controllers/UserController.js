@@ -9,5 +9,10 @@ controllers.getCodesOfUser = async (req) => {
 
     return await UserService.getCodesOfUser(user_id);
 };
+controllers.getUser = async (req) => {
+    const user_id = req.params.id;
+
+    return await UserService.getUser(user_id);
+};
 
 module.exports = controllers;
