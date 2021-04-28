@@ -6,7 +6,7 @@ const getLoginURL = jest.fn().mockImplementation(() => {
 const issueAccessToken = jest.fn().mockImplementation(() => {
     return 'mocked_oauth_token';
 });
-const getUser = jest.fn().mockImplementation(() => {
+const getUserByAccessToken = jest.fn().mockImplementation(() => {
     return {
         id: 5,
         login: 'Jungwoo-Son'
@@ -16,7 +16,7 @@ const mock = jest.fn().mockImplementation(() => {
     return {
         getLoginURL: getLoginURL,
         issueAccessToken: issueAccessToken,
-        getUser: getUser
+        getUserByAccessToken: getUserByAccessToken
     };
 });
 

@@ -29,7 +29,7 @@ describe('AuthService 단위 테스트', () => {
             const mocked_user = { id: 81658, login: 'Jungwoo-Son'};
             GithubApp.mockImplementation(() => {
                 return {
-                    getUser: () => mocked_user,
+                    getUserByAccessToken: () => mocked_user,
                     issueAccessToken: () => 'mocked_oauth_token'
                 }
             });
