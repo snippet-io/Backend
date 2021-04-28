@@ -4,15 +4,19 @@ class User {
     getId() {
         return this.id;
     }
+    getName() {
+        return this.name;
+    }
     addCode(code) {
         this.codes.push(code);
     }
 }
 
 class UserBuilder extends ModelBuilder{
-    constructor(id) {
+    constructor(id, name) {
         super(User);
         this.id = id;
+        this.name = name;
         this.codes = [];
     }
 }
