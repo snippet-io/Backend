@@ -6,8 +6,11 @@ const Joi = require('joi');
 
 controllers.getCodesOfUser = async (req) => {
     const user_id = req.params.id;
+    const { language } = req.query;
 
-    return await UserService.getCodesOfUser(user_id);
+    return await UserService.getCodesOfUser(user_id, {
+        language
+    });
 };
 controllers.getUser = async (req) => {
     const user_id = req.params.id;
