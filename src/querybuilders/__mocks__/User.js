@@ -18,6 +18,16 @@ const UserQueryBuilder = jest.fn()
             db.push(user);
             return this;
         },
+        upsert: function (user) {
+            const index = db.findIndex(u => u.getId() == user.getId());
+            if(index == -1) {
+                db.push(user);
+            }
+            else {
+                db[index] = user;
+            }
+            return this;
+        },
         includeCode: function () {
             if(this.result instanceof Array == false) {
                 code_db.forEach(code =>{
