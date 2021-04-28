@@ -30,6 +30,10 @@ describe('CodeController 단위 테스트', () => {
     });
     it('getUser 테스트', async () => {
         GithubApp.mockImplementation(() => ({
+            getUserById: (id) => id == 1 ? ({
+                id: 1,
+                login: "Jungwoo-Son",
+            }) : undefined,
             getUser: (user_name) => user_name == 'Jungwoo-Son' ? ({
                 name: "Jungwoo Son",
                 id: 1,

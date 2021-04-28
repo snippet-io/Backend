@@ -20,6 +20,10 @@ describe('User 서비스 단위 테스트', () => {
     });
     it('User의 프로필 얻기', async () => {
         GithubApp.mockImplementation(() => ({
+            getUserById: (id) => id == 1 ? ({
+                id: 1,
+                login: "Jungwoo-Son",
+            }) : undefined,
             getUser: (user_name) => user_name == 'Jungwoo-Son' ? ({
                 name: "Jungwoo Son",
                 id: 1,
