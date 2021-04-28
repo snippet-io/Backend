@@ -35,7 +35,7 @@ const UserQueryBuilder = jest.fn()
     }));
 
 UserQueryBuilder.mockClear = () => {
-    db = [ new UserBuilder(1).build() ];
+    db = [ new UserBuilder(1, 'Jungwoo-Son').build() ];
     code_db = [ new CodeBuilder('코드제목', 'rust', 1).setContent('내용').setId(1).setDescription('설명').setCreatedDatetime(new ServiceTime('2021-04-19T00:00:00.000Z')).build() ];
 }
 
