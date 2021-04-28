@@ -69,6 +69,17 @@ class GithubApp {
         }
         return data;
     }
+    async getUserById(user_id) {
+        let data;
+        try {
+            let res = await GithubApp.AppRequester.get(`/users?since=${user_id-1}&per_page=1`, );
+            data = res.data[0];
+        }
+        catch(e) {
+            throw new AxiosException(e);
+        }
+        return data;
+    }
 }
 
 module.exports = GithubApp;
