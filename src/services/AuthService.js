@@ -9,15 +9,15 @@ class AuthService {
     static async createAccessToken(user_code) {
         const app = new GithubApp();
 
-        let github_user;
+        let oauth_token;
+        const github_app = new GithubApp;
         try {
-            const github_app = new GithubApp;
-            github_user = await github_app.getUser(user_code);
+            oauth_token = await github_app.issueAccessToken(user_code);
         } catch (e) {
             throw new BadVerificationCode;
         }
-        const oauth_token = await app.issueAccessToken(user_code);
-        
+        const github_user = await github_app.getUserByAccessToken(oauth_token);
+
         const access_token = await AccessToken.issue(github_user.id, oauth_token);
         const user = new UserBuilder(access_token.user_id, github_user.login).build();
         // UserRepo.create(user);

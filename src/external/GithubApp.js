@@ -40,7 +40,7 @@ class GithubApp {
         }
         return res.data.access_token;
     }
-    async getUser(access_token) {
+    async getUserByAccessToken(access_token) {
         let data;
         try {
             let res = await GithubApp.AppRequester.get('/user', {
