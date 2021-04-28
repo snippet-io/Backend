@@ -4,16 +4,8 @@ const InvalidToken = require('../errors/TokenException');
 const GithubApp = require('../external/GithubApp');
 
 class AccessToken {
-    static async issue(oauth_token) {
-        try {
-            const github_app = new GithubApp;
-            const github_user = await github_app.getUser(oauth_token);
-            const user_id = github_user.id;
-            
-            return await newAccessToken(user_id, oauth_token);
-        } catch (e) {
-            throw new InvalidToken;
-        }
+    static async issue(user_id, oauth_token) {
+        return await newAccessToken(user_id, oauth_token);
     }
     static async fromString(token) {
         try {
