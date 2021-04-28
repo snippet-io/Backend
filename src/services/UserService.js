@@ -9,6 +9,10 @@ class CodeService {
         let query = new CodeQueryBuilder();
         query = query.findAll().filterByAuthorId(user_id);
 
+        if(option?.language) {
+            query = query.filterByLanguage(option.language);
+        }
+
         const user_codes = query.excute();
         return user_codes;
     }
