@@ -61,7 +61,7 @@ class GithubApp {
     async getUser(user_name) {
         let data;
         try {
-            let res = await GithubApp.AppRequester.get(`/user/${user_name}`, );
+            let res = await GithubApp.AppRequester.get(`/users/${user_name}`, );
             data = res.data;
         }
         catch(e) {
