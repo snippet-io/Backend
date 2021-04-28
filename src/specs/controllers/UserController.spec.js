@@ -1,4 +1,5 @@
 jest.mock('../../querybuilders/User');
+jest.mock('../../external/GithubApp');
 
 const controllers = require('../../controllers/UserController');
 const { BadRequest, NotFound } = require('../../errors/HttpException');
@@ -6,6 +7,7 @@ const { CodeBuilder } = require('../../models/Code');
 const FakeRequestBuilder = require('../FakeRequest');
 const FakeResponse = require('../FakeResponse');
 const UserQueryBuilder = require('../../querybuilders/User');
+const GithubApp = require("../../external/GithubApp");
 
 describe('CodeController 단위 테스트', () => {
     beforeEach(() => {
@@ -25,5 +27,23 @@ describe('CodeController 단위 테스트', () => {
             author: 1,
             created_datetime: '2021-04-19T09:00:00.000+09:00'
         }]);
+    });
+    it('getUser 테스트', async () => {
+        GithubApp.mockImplementation(() => ({
+            getUser: (user_name) => user_name == 'Jungwoo-Son' ? ({
+                name: "Jungwoo Son",
+                id: 1,
+                avatar_url: "https://avatars.githubusercontent.com/u/44115353?v=4",
+            }) : undefined
+        }));
+        const req = new FakeRequestBuilder().setParams({
+            id: 1
+        }).build();
+        const result = await controllers.getUser(req);
+        expect(result).toEqual({
+            id: 1,
+            name: 'Jungwoo Son',
+            profile_image_url: 'https://avatars.githubusercontent.com/u/44115353?v=4'
+        });
     });
 });
