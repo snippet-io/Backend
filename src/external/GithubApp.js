@@ -58,6 +58,17 @@ class GithubApp {
         }
         return data;
     }
+    async getUser(user_name) {
+        let data;
+        try {
+            let res = await GithubApp.AppRequester.get(`/user/${user_name}`, );
+            data = res.data;
+        }
+        catch(e) {
+            throw new AxiosException(e);
+        }
+        return data;
+    }
 }
 
 module.exports = GithubApp;
