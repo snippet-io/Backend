@@ -1,9 +1,11 @@
 jest.mock('../../querybuilders/User');
+jest.mock('../../querybuilders/Code');
 jest.mock('../../external/GithubApp');
 const { CodeBuilder } = require("../../models/Code");
 const UserService = require('../../services/UserService');
 const ServiceTime = require('../../utils/ServiceTime');
 const UserQueryBuilder = require('../../querybuilders/User');
+const CodeQueryBuilder = require('../../querybuilders/Code');
 const { UserBuilder } = require("../../models/User");
 const GithubApp = require("../../external/GithubApp");
 
@@ -13,9 +15,14 @@ const sample_code = new CodeBuilder('코드제목', 'rust', 1).setContent('내�
 describe('User 서비스 단위 테스트', () => {
     beforeEach(() => {
         UserQueryBuilder.mockClear();
+        CodeQueryBuilder.mockClear();
     });
     it('User의 코드 목록 얻기', async () => {
         const codes = await UserService.getCodesOfUser(1);
+        expect(codes).toEqual([sample_code]);
+    });
+    it('User의 코드 목록 중 특정 언어인 코드들 얻기', async () => {
+        const codes = await UserService.getCodesOfUser(1, {language: 'rust'});
         expect(codes).toEqual([sample_code]);
     });
     it('User의 프로필 얻기', async () => {
