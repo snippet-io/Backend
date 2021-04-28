@@ -21,19 +21,26 @@ class UserRepo extends CustomRepo{
         return user;
     }
     async create(user, ...args) {
-        await UserRepo.repo.scope(...this.scopes).create({
-            id: user.getId()
-        }, ...Array.from(args));
+        await UserRepo.repo.scope(...this.scopes).create(UserToEntity(user), ...Array.from(args));
+    }
+    async upsert(user, ...args) {
+        await UserRepo.repo.scope(...this.scopes).upsert(UserToEntity(user), ...Array.from(args));
     }
 }
 function EntityToUser(entity) {
-    const user = new UserBuilder(entity.id).build();
+    const user = new UserBuilder(entity.id, entitiy.name).build();
     if(entity.codes) {
         entity.codes.forEach(code_entity => {
             user.addCode(EntityToCode(code_entity));
         });
     }
     return user;
+}
+function UserToEntity(user) {
+    return {
+        id: user.getId(),
+        name: user.getName()
+    }
 }
 function EntityToCode(entity) {
     return new CodeBuilder(entity.title, entity.language, entity.author_id)
@@ -48,6 +55,10 @@ Repo.init({
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true
+    },
+    name: {
+        type: DataTypes.STRING(256),
+        allowNull: false
     }
 }, {
     sequelize,
