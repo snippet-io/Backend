@@ -28,7 +28,7 @@ class UserRepo extends CustomRepo{
     }
 }
 function EntityToUser(entity) {
-    const user = new UserBuilder(entity.id, entitiy.name).build();
+    const user = new UserBuilder(entity.id, entity.name).build();
     if(entity.codes) {
         entity.codes.forEach(code_entity => {
             user.addCode(EntityToCode(code_entity));
