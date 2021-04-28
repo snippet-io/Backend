@@ -26,7 +26,7 @@ describe('AuthService 단위 테스트', () => {
             expect(access_token.toString()).toBe(sample_stringified_access_token);
         });
         it('미등록 유저 엑세스 토큰 발급 성공', async () => {
-            const mocked_user = { id: 81658};
+            const mocked_user = { id: 81658, login: 'Jungwoo-Son'};
             GithubApp.mockImplementation(() => {
                 return {
                     getUser: () => mocked_user,
@@ -38,7 +38,7 @@ describe('AuthService 단위 테스트', () => {
             
             const users = await new UserQueryBuilder().findAll().excute();
             // const users = await UserRepo.findAll();
-            expect(users).toContainEqual(new UserBuilder(mocked_user.id).build());
+            expect(users).toContainEqual(new UserBuilder(mocked_user.id, mocked_user.login).build());
         });
         it('유효하지 않는 코드', async () => {
 
