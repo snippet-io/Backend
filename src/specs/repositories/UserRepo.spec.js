@@ -4,7 +4,7 @@ const UserQueryBuilder = require('../../querybuilders/User');
 const { CodeBuilder } = require('../../models/Code');
 const ServiceTime = require('../../utils/ServiceTime');
 
-const simple_user_table = [new UserBuilder(1).build()];
+const simple_user_table = [new UserBuilder(1, 'Jungwoo-Son').build()];
 
 describe('User Repo 통합 테스트', () => {
     let transaction;
@@ -23,7 +23,7 @@ describe('User Repo 통합 테스트', () => {
         expect(users).toEqual(simple_user_table);
     });
     it('create 성공 케이스', async () => {
-        const new_user = new UserBuilder(7).build();
+        const new_user = new UserBuilder(7, 'ABC').build();
         await new UserQueryBuilder().create(new_user).excute(transaction);
         // await UserRepo.create(new_user, transaction);
         const users = await new UserQueryBuilder().findAll().excute(transaction);
@@ -36,7 +36,7 @@ describe('User Repo 통합 테스트', () => {
     });
     it('includeCode 성공 케이스', async () => {
         const user = await new UserQueryBuilder().findByPk(1).includeCode().excute(transaction);
-        const expected_user = new UserBuilder(1).build();
+        const expected_user = new UserBuilder(1, 'Jungwoo-Son').build();
         expected_user.addCode(new CodeBuilder('코드제목', 'rust', 1).setContent('내용').setId(1).setDescription('설명').setCreatedDatetime(new ServiceTime('2021-04-19T00:00:00Z')).build());
         expect(user).toEqual(expected_user);
     });
