@@ -12,4 +12,9 @@ describe('Code 서비스 단위 테스트', () => {
         const staring = await new StaringQueryBuilder().findAll().excute();
         expect(staring).toContainEqual({code_id: 1, user_id: 2});
     });
+    it('코드 언스타하기 테스트', async () => {
+        await StaringService.unstarCode(1, 1);
+        const staring = await new StaringQueryBuilder().findAll().excute();
+        expect(staring).not.toContainEqual({code_id: 1, user_id: 1});
+    });
 });
