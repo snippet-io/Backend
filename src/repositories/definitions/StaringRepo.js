@@ -14,6 +14,17 @@ class StaringRepo extends CustomRepo {
     async create(staring, ...args) {
         await StaringRepo.repo.scope(...this.scopes).create({code_id: staring.code_id, user_id: staring.user_id}, ...Array.from(args));
     }
+    async destroy(staring, option) {
+        const number_of_destoryed = await StaringRepo.repo.scope(...this.scopes).destroy({
+            where: {
+                code_id: staring.code_id,
+                user_id: staring.user_id
+            },
+            transaction: option.transaction
+        });
+
+        return number_of_destoryed;
+    }
 }
 
 function EntityToStaring(entity) {
