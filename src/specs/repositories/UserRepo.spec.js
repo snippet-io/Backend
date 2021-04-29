@@ -4,7 +4,7 @@ const UserQueryBuilder = require('../../querybuilders/User');
 const { CodeBuilder } = require('../../models/Code');
 const ServiceTime = require('../../utils/ServiceTime');
 
-const simple_user_table = [new UserBuilder(1, 'Jungwoo-Son').build()];
+const simple_user_table = [new UserBuilder(1, 'Jungwoo-Son').build(), new UserBuilder(2, 'Sejun-Kim').build()];
 
 describe('User Repo 통합 테스트', () => {
     let transaction;
