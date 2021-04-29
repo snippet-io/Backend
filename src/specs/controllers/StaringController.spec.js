@@ -25,4 +25,20 @@ describe('CodeController 단위 테스트', () => {
         const starings = new StaringQueryBuilder().findAll().excute();
         expect(starings).toContainEqual({code_id: 1, user_id: 2});
     });
+    it('unstarCode 성공', async () => {
+        AccessToken.issue = () => ({
+            getUserId: () => 1
+        });
+        const req = new FakeRequestBuilder()
+            .setParams({
+                id: 1
+            })
+            .setAuth(AccessToken.issue())
+            .build();
+        
+        await controllers.unstarCode(req);
+
+        const starings = new StaringQueryBuilder().findAll().excute();
+        expect(starings).not.toContainEqual({code_id: 1, user_id: 2});
+    });
 });
