@@ -11,6 +11,9 @@ class StaringRepo extends CustomRepo {
         const starings = await StaringRepo.repo.scope(...this.scopes).findAll(...Array.from(args));
         return starings.map(EntityToStaring);
     }
+    async create(staring, ...args) {
+        await StaringRepo.repo.scope(...this.scopes).create({code_id: staring.code_id, user_id: staring.user_id}, ...Array.from(args));
+    }
 }
 
 function EntityToStaring(entity) {
