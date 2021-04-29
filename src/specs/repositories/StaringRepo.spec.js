@@ -23,4 +23,12 @@ describe('User Repo 통합 테스트', () => {
         const starings = await new StaringQueryBuilder().findAll().excute(transaction);
         expect(starings).toContainEqual({code_id: 1, user_id: 2});
     });
+    it('delete 성공', async () => {
+        const query = new StaringQueryBuilder();
+        const number_of_deleted = await query.delete({code_id: 1, user_id: 1}).excute(transaction);
+        const starings = await query.findAll().excute(transaction);
+
+        expect(number_of_deleted).toBe(1);
+        expect(starings).not.toContainEqual({code_id: 1, user_id: 1});
+    });
 });
