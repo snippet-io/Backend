@@ -15,6 +15,15 @@ const StaringQueryBuilder = jest.fn()
             this.result = this.result.filter(staring => staring.user_id == user_id);
             return this;
         },
+        filterByCode: function(code_id) {
+            this.result = this.result.filter(staring => staring.code_id == code_id);
+            return this;
+        },
+        count: function() {
+            this.cb = (list) => list;
+            this.result = db;
+            return this;
+        },
         includeStaredCode: function () {
             if(this.result instanceof Array == false) {
                 code_db.forEach(code =>{
