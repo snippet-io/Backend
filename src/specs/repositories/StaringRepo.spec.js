@@ -35,4 +35,8 @@ describe('User Repo 통합 테스트', () => {
         const starings = await new StaringQueryBuilder().findAll().includeStaredCode().excute(transaction);
         expect(starings).toEqual(simple_staring_table);
     });
+    it('count 성공', async () => {
+        const number = await new StaringQueryBuilder().count().excute();
+        expect(number).toBe(1);
+    });
 });
