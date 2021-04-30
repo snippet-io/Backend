@@ -49,7 +49,7 @@ class Code {
             language: this.language,
             author: this.author.id,
             created_datetime: this.created_datetime.toString(),
-            // star_count: this.star_count
+            star_count: this.star_count
         };
     }
 }
