@@ -4,7 +4,7 @@ const { CodeBuilder } = require('../../models/Code');
 const Option = require('js-option');
 const ServiceTime = require('../../utils/ServiceTime');
 
-
+let db;
 const CodeQueryBuilder = jest.fn()
     .mockImplementation(() => ({
         all: true,
