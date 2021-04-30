@@ -14,5 +14,10 @@ controllers.unstarCode = async (req) => {
     
     await StaringService.unstarCode(code_id, user_id);
 };
+controllers.getStaredCodeByUser = async (req) => {
+    const user_id = req.params.id;
+
+    return await StaringService.getStaredCodeByUser(user_id);
+};
 
 module.exports = controllers;
