@@ -25,6 +25,10 @@ class StaringRepo extends CustomRepo {
 
         return number_of_destoryed;
     }
+    async count(...args) {
+        const number = await StaringRepo.repo.scope(...this.scopes).count(...args);
+        return number;
+    }
 }
 
 function EntityToStaring(entity) {
