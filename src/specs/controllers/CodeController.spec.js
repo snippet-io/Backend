@@ -1,4 +1,5 @@
 jest.mock('../../querybuilders/Code');
+jest.mock('../../querybuilders/Staring');
 jest.mock('../../external/GithubApp');
 jest.mock('../../authentication');
 
@@ -9,10 +10,12 @@ const { CodeBuilder } = require('../../models/Code');
 const FakeRequestBuilder = require('../FakeRequest');
 const FakeResponse = require('../FakeResponse');
 const CodeQueryBuilder = require('../../querybuilders/Code');
+const StaringQueryBuilder = require('../../querybuilders/Staring');
 
 describe('CodeController 단위 테스트', () => {
     beforeEach(() => {
         CodeQueryBuilder.mockClear();
+        StaringQueryBuilder.mockClear();
     });
     
     it('code 생성', async () => {
@@ -129,7 +132,8 @@ describe('CodeController 단위 테스트', () => {
             language: 'rust',
             description: '설명',
             author: 1,
-            created_datetime: '2021-04-19T09:00:00.000+09:00'
+            created_datetime: '2021-04-19T09:00:00.000+09:00',
+            star_count: 1
         }]);
     });
     it('code list 얻기 실패(400)', async () => {
@@ -145,7 +149,8 @@ describe('CodeController 단위 테스트', () => {
             language: 'rust',
             content: '내용',
             description: '설명',
-            created_datetime: '2021-04-19T09:00:00.000+09:00'
+            created_datetime: '2021-04-19T09:00:00.000+09:00',
+            star_count: 1
         });
     });
     it('code 얻기 실패(400)', async () => {
@@ -165,7 +170,8 @@ describe('CodeController 단위 테스트', () => {
             language: 'rust',
             content: '내용',
             description: '설명',
-            created_datetime: '2021-04-19T09:00:00.000+09:00'
+            created_datetime: '2021-04-19T09:00:00.000+09:00',
+            star_count: 1
         }]);
     });
     it('code 언어로 얻기', async () => {
@@ -182,7 +188,8 @@ describe('CodeController 단위 테스트', () => {
             language: 'rust',
             content: '내용',
             description: '설명',
-            created_datetime: '2021-04-19T09:00:00.000+09:00'
+            created_datetime: '2021-04-19T09:00:00.000+09:00',
+            star_count: 1
         }]);
     });
 });
