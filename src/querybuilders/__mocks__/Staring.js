@@ -1,3 +1,5 @@
+const { CodeBuilder } = require("../../models/Code");
+const ServiceTime = require("../../utils/ServiceTime");
 
 const StaringQueryBuilder = jest.fn()
     .mockImplementation(() => ({
@@ -7,6 +9,24 @@ const StaringQueryBuilder = jest.fn()
         },
         create: function (staring) {
             db.push(staring);
+            return this;
+        },
+        filterByUser(user_id) {
+            this.result = this.result.filter(staring => staring.user_id == user_id);
+            return this;
+        },
+        includeStaredCode: function () {
+            if(this.result instanceof Array == false) {
+                code_db.forEach(code =>{
+                    this.result.stared_code = code;
+                });
+            }
+            else {
+                this.result.map(staring => {
+                    staring.stared_code = code_db[code_db.findIndex(code => code.id === staring.code_id)];
+                    return staring;
+                });
+            }
             return this;
         },
         delete: function (staring) {
@@ -31,6 +51,7 @@ const StaringQueryBuilder = jest.fn()
 
 StaringQueryBuilder.mockClear = () => {
     db = [{code_id: 1, user_id: 1}];
+    code_db = [ new CodeBuilder('코드제목', 'rust', 1).setContent('내용').setId(1).setDescription('설명').setCreatedDatetime(new ServiceTime('2021-04-19T00:00:00.000Z')).build() ];
 }
 
 module.exports = StaringQueryBuilder;
