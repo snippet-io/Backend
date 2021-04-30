@@ -12,6 +12,13 @@ class StaringQueryScopes {
             }
         };
     }
+    filterByCode(code_id) {
+        return {
+            where: {
+                code_id
+            }
+        };
+    }
     includeStaredCode() {
         return {
             include: [
