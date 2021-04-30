@@ -5,6 +5,13 @@ const StaringRepo = require("../repositories/definitions/StaringRepo");
 class StaringQueryScopes {
     static repo = StaringRepo;
 
+    filterByUser(user_id) {
+        return {
+            where: {
+                user_id
+            }
+        };
+    }
     includeStaredCode() {
         return {
             include: [
