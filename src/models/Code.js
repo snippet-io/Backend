@@ -32,6 +32,13 @@ class Code {
         return this.author;
     }
 
+    setStarCount(count) {
+        this.star_count = count;
+    }
+    getStarCount(count) {
+        return this.star_count;
+    }
+
 
     toJSON() {
         return {
@@ -41,7 +48,8 @@ class Code {
             description: this.description,
             language: this.language,
             author: this.author.id,
-            created_datetime: this.created_datetime.toString()
+            created_datetime: this.created_datetime.toString(),
+            // star_count: this.star_count
         };
     }
 }
