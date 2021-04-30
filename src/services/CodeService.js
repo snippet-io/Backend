@@ -1,5 +1,6 @@
 const { Forbidden, NotFound } = require("../errors/HttpException");
 const CodeQueryBuilder = require("../querybuilders/Code");
+const StaringQueryBuilder = require("../querybuilders/Staring");
 const { CodeRepo } = require("../repositories");
 
 
@@ -40,10 +41,17 @@ class CodeService {
             query = query.paginate(option.pagination.limit, option.pagination.offset);
         }
 
-        return await query.excute();
+        let codes = await query.excute();
+        const staring_query = new StaringQueryBuilder();
+        for (const code of codes) {
+            code.setStarCount(await staring_query.count().filterByCode(code.getId()).excute());
+        }
+        return codes;
     }
     static async getCode(id) {
-        return (await new CodeQueryBuilder().findByPk(id).excute()).orElseThrow(new NotFound);
+        const code = (await new CodeQueryBuilder().findByPk(id).excute()).orElseThrow(new NotFound);
+        code.setStarCount(await new StaringQueryBuilder().count().filterByCode(code.getId()).excute());
+        return code;
     }
 }
 
