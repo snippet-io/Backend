@@ -11,7 +11,7 @@ class AccessToken {
         try {
             const payload = JWT.verify(token, TOKEN_SECRET, { subject: 'access_token' });
             const github_app = new GithubApp;
-            const github_user = await github_app.getUser(payload.oauth_token);
+            const github_user = await github_app.getUserByAccessToken(payload.oauth_token);
     
             const access_token = new AccessToken();
             access_token.token = token;
