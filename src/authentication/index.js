@@ -20,6 +20,7 @@ class AccessToken {
             access_token.sub = payload.sub;
             return access_token;   
         } catch (e) {
+            console.log(e)
             throw new InvalidToken;
         }
     }
