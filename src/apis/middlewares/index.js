@@ -12,6 +12,7 @@ async function AccessTokenExtractor(req, res) {
     try {
         access_token = await AccessToken.fromString(stringfied_token);
     } catch (e) {
+        console.log(e);
         throw new Forbidden;
     }
     req.auth = access_token;
