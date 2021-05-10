@@ -22,6 +22,10 @@ class GithubApp {
     auth: { username: GITHUB_CLIENT_ID, password: GITHUB_CLIENT_SECRET },
     headers: { Accept: "application/json" },
   });
+  static AuthorizedAppRequester = axios.create({
+    baseURL: "https://api.github.com",
+    headers: { Accept: "application/json" },
+  });
   async getLoginURL(redirect) {
     return `https://github.com/login/oauth/authorize?redirect_uri=${redirect}&client_id=${GITHUB_CLIENT_ID}`;
   }
@@ -46,7 +50,7 @@ class GithubApp {
   async getUserByAccessToken(access_token) {
     let data;
     try {
-      let res = await GithubApp.AppRequester.get("/user", {
+      let res = await GithubApp.AuthorizedAppRequester.get("/user", {
         headers: { Authorization: `token ${access_token}` },
       });
       data = res.data;
