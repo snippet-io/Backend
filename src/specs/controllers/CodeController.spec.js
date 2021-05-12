@@ -229,4 +229,24 @@ describe("CodeController 단위 테스트", () => {
       },
     ]);
   });
+  it("code list 스타 갯수로 정렬해 얻기", async () => {
+    const req = new FakeRequestBuilder().setQuery({
+      offset: 0,
+      limit: 1,
+      order: "stars",
+    });
+    const codes = await controllers.getCodes(req, new FakeResponse());
+    expect(codes.map((c) => c.toJSON())).toEqual([
+      {
+        id: 1,
+        title: "코드제목",
+        content: "내용",
+        language: "rust",
+        description: "설명",
+        author: 1,
+        created_datetime: "2021-04-19T09:00:00.000+09:00",
+        star_count: 1,
+      },
+    ]);
+  });
 });
