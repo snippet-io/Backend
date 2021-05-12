@@ -72,6 +72,13 @@ describe("Code Repo 통합 테스트", () => {
       .excute(transaction);
     expect(() => result.orElseThrow(new Error())).toThrow();
   });
+  it("order by star count 테스트", async () => {
+    const result = await new CodeQueryBuilder()
+      .findAll()
+      .orderByStarsCount()
+      .excute(transaction);
+    expect(result).toEqual(simple_code_table);
+  });
   it("create 테스트", async () => {
     const new_code = new CodeBuilder("title", "language", 1)
       .setContent("content")
