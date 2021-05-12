@@ -73,6 +73,10 @@ const CodeQueryBuilder = jest.fn().mockImplementation(() => ({
     );
     return this;
   },
+  orderByStarsCount: function () {
+    this.result = this.result.sort((a, b) => b.stars - a.stars);
+    return this;
+  },
 
   excute: function () {
     if (this.cb) {
