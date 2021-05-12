@@ -102,19 +102,5 @@ controllers.getCode = async (req) => {
   }
   return await CodeService.getCode(id);
 };
-// controllers.searchCode = async (req) => {
-//     const schema = Joi.object({
-//         limit: Joi.number().required(),
-//         offset: Joi.number().required(),
-//         search: Joi.string().required()
-//     });
-
-//     if(schema.validate(req.query).error) {
-//         throw new BadRequest;
-//     }
-
-//     const { limit, offset, search } = req.query;
-//     return await CodeService.searchCodeWithPaging(search, Number(limit), Number(offset));
-// };
 
 module.exports = controllers;
