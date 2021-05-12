@@ -47,6 +47,11 @@ class CodeService {
     if (option.pagination) {
       query = query.paginate(option.pagination.limit, option.pagination.offset);
     }
+    if (option.order) {
+      if (option.order == "stars") {
+        query = query.orderByStarsCount();
+      }
+    }
 
     let codes = await query.excute();
     const staring_query = new StaringQueryBuilder();
