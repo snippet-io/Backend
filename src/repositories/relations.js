@@ -13,6 +13,7 @@ CodeRepo.repo.belongsTo(UserRepo.repo, {
 });
 
 CodeRepo.repo.hasMany(StaringRepo.repo, {
+  as: "stars",
   sourceKey: "id",
   foreignKey: "code_id",
 });
@@ -25,4 +26,5 @@ StaringRepo.repo.belongsTo(CodeRepo.repo, {
 module.exports = {
   UserRepo,
   CodeRepo,
+  StaringRepo,
 };
