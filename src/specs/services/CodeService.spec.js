@@ -105,4 +105,10 @@ describe("Code 서비스 단위 테스트", () => {
     });
     expect(codes).toEqual([sample_code]);
   });
+  it("코드 스타 갯수로 정렬", async () => {
+    const codes = await CodeService.getCodes({
+      order: "stars",
+    });
+    expect(codes).toEqual([sample_code]);
+  });
 });
