@@ -1,6 +1,6 @@
 const QueryBuilderMaker = require("@yeoul/sequelize-querybuilder");
-const { CodeRepo } = require("../repositories");
-const { Op } = require("sequelize");
+const { CodeRepo, StaringRepo } = require("../repositories");
+const { Op, Sequelize } = require("sequelize");
 
 class CodeQueryScopes {
   static repo = CodeRepo;
@@ -40,6 +40,13 @@ class CodeQueryScopes {
     return {
       limit,
       offset,
+    };
+  }
+  orderByStarsCount() {
+    return {
+      include: [{ model: StaringRepo.repo, as: "stars" }],
+      group: ["stars.code_id"],
+      order: [[Sequelize.fn("count", Sequelize.col("stars.user_id")), "DESC"]],
     };
   }
 }
