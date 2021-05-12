@@ -77,18 +77,20 @@ controllers.getCodes = async (req) => {
     offset: Joi.number().required(),
     search: Joi.string(),
     language: Joi.string(),
+    order: Joi.string(),
   });
 
   if (schema.validate(req.query).error) {
     throw new BadRequest();
   }
 
-  const { limit, offset, search, language } = req.query;
+  const { limit, offset, search, language, order } = req.query;
 
   return await CodeService.getCodes({
     language,
     search,
     pagination: { limit: Number(limit), offset: Number(offset) },
+    order,
   });
 };
 controllers.getCode = async (req) => {
