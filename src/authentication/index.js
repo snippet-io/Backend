@@ -31,6 +31,7 @@ class AccessToken {
   toJSON() {
     return {
       access_token: this.token,
+      id: this.user_id,
     };
   }
   getUserId() {
