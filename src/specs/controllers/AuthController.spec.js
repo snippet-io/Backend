@@ -45,6 +45,7 @@ describe("AuthController 단위 테스트", () => {
     const result = await controllers.issueAccessToken(req, res);
     expect(result.toJSON()).toEqual({
       access_token: expected_token,
+      id: 5,
     });
   });
   it("access token 발급시 코드가 주어지지 않음 Bad Request", async () => {
