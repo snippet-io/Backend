@@ -74,6 +74,18 @@ class CodeService {
     );
     return code;
   }
+  static async isStarredUser(code_id, user_id) {
+    const filtered_staring = await new StaringQueryBuilder()
+      .findAll()
+      .filterByCode(code_id)
+      .filterByUser(user_id)
+      .excute();
+
+    if (filtered_staring.length < 1) {
+      return false;
+    }
+    return true;
+  }
 }
 
 module.exports = CodeService;
