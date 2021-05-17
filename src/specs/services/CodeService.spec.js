@@ -111,4 +111,12 @@ describe("Code 서비스 단위 테스트", () => {
     });
     expect(codes).toEqual([sample_code]);
   });
+  it("해당 유저가 스타했는지 확인 - true", async () => {
+    const result = await CodeService.isStarredUser(1, 1);
+    expect(result).toBe(true);
+  });
+  it("해당 유저가 스타했는지 확인 - false", async () => {
+    const result = await CodeService.isStarredUser(1, 2);
+    expect(result).toBe(false);
+  });
 });
