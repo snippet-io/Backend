@@ -249,4 +249,21 @@ describe("CodeController 단위 테스트", () => {
       },
     ]);
   });
+  it("유저가 해당 code를 스타했는지 확인 - 204", async () => {
+    const req = new FakeRequestBuilder().setParams({
+      code_id: 1,
+      user_id: 1,
+    });
+    const res = new FakeResponse();
+    await controllers.isStarredUser(req, res);
+    expect(res.getStatus()).toBe(204);
+  });
+  it("유저가 해당 code를 스타했는지 확인 - 404", async () => {
+    const req = new FakeRequestBuilder().setParams({
+      code_id: 1,
+      user_id: 2,
+    });
+    const res = new FakeResponse();
+    await expect(controllers.isStarredUser(req, res)).rejects.toThrow(NotFound);
+  });
 });
