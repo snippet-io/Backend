@@ -1,6 +1,6 @@
-const { BadRequest } = require("../errors/HttpException");
+const { BadRequest, NotFound } = require("../errors/HttpException");
 const CodeService = require("../services/CodeService");
-const { CodeBuilder } = require("../models/Code");
+const { CodeBuilder, Code } = require("../models/Code");
 const { AccessToken } = require("../authentication");
 const controllers = {};
 
@@ -103,6 +103,14 @@ controllers.getCode = async (req) => {
     throw new BadRequest();
   }
   return await CodeService.getCode(id);
+};
+controllers.isStarredUser = async (req, res) => {
+  const { code_id, user_id } = req.params;
+  if (await CodeService.isStarredUser(code_id, user_id)) {
+    res.status(204);
+  } else {
+    throw new NotFound();
+  }
 };
 
 module.exports = controllers;
