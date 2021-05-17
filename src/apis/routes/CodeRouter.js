@@ -17,5 +17,6 @@ router.delete(
   [AccessTokenExtractor],
   staring_controllers.unstarCode
 );
+router.get("/:code_id/stars/:user_id", controllers.isStarredUser);
 
 module.exports = router;
