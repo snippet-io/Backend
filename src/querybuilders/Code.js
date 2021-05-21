@@ -40,6 +40,7 @@ class CodeQueryScopes {
     return {
       limit,
       offset,
+      order: [["created_datetime", "DESC"]],
     };
   }
   orderByStarsCount() {
