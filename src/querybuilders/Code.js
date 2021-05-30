@@ -40,6 +40,10 @@ class CodeQueryScopes {
     return {
       limit,
       offset,
+    };
+  }
+  orderByLatest() {
+    return {
       order: [["created_datetime", "DESC"]],
     };
   }

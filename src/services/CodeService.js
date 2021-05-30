@@ -47,6 +47,9 @@ class CodeService {
     if (option.pagination) {
       query = query.paginate(option.pagination.limit, option.pagination.offset);
     }
+    if (option.pagination && (option.order ?? true)) {
+      query = query.orderByLatest();
+    }
     if (option.order) {
       if (option.order == "stars") {
         query = query.orderByStarsCount();
