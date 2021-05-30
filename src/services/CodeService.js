@@ -47,7 +47,7 @@ class CodeService {
     if (option.pagination) {
       query = query.paginate(option.pagination.limit, option.pagination.offset);
     }
-    if (option.pagination && (option.order ?? true)) {
+    if (option.pagination && option.order == null) {
       query = query.orderByLatest();
     }
     if (option.order) {
