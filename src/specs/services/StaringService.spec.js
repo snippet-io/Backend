@@ -12,6 +12,7 @@ const sample_stared_code = new CodeBuilder("코드제목", "rust", 1)
   .setId(1)
   .setCreatedDatetime(new ServiceTime("2021-04-19T00:00:00.000Z"))
   .build();
+sample_stared_code.setStarCount(1);
 
 describe("Code 서비스 단위 테스트", () => {
   beforeEach(() => {

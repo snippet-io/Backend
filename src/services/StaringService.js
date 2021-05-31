@@ -22,7 +22,12 @@ class StaringService {
       }
     }
     const stared_code_by_user = await query.excute();
-    console.log(stared_code_by_user);
+    const staring_query = new StaringQueryBuilder();
+    for (const code of stared_code_by_user) {
+      code.setStarCount(
+        await staring_query.count().filterByCode(code.getId()).excute()
+      );
+    }
     const result = stared_code_by_user;
     return result;
   }

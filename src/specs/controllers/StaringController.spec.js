@@ -56,6 +56,7 @@ describe("CodeController 단위 테스트", () => {
         content: "내용",
         description: "설명",
         created_datetime: "2021-04-19T09:00:00.000+09:00",
+        star_count: 1,
       },
     ]);
   });

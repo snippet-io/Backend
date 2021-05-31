@@ -1,6 +1,7 @@
 const { Forbidden, NotFound } = require("../errors/HttpException");
 const GithubApp = require("../external/GithubApp");
 const CodeQueryBuilder = require("../querybuilders/Code");
+const StaringQueryBuilder = require("../querybuilders/Staring");
 const UserQueryBuilder = require("../querybuilders/User");
 
 class CodeService {
@@ -19,6 +20,12 @@ class CodeService {
     }
 
     const user_codes = query.excute();
+    const staring_query = new StaringQueryBuilder();
+    for (const code of user_codes) {
+      code.setStarCount(
+        await staring_query.count().filterByCode(code.getId()).excute()
+      );
+    }
     return user_codes;
   }
   static async getUser(user_id) {
