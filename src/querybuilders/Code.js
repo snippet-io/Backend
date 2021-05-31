@@ -57,9 +57,15 @@ class CodeQueryScopes {
   }
   orderByStarsCount() {
     return {
-      include: [{ model: StaringRepo.repo, as: "stars" }],
-      group: ["stars.code_id"],
-      order: [[Sequelize.fn("count", Sequelize.col("stars.user_id")), "DESC"]],
+      include: [
+        {
+          model: StaringRepo.repo,
+          as: "stars",
+          duplicating: false,
+        },
+      ],
+      group: [Sequelize.col("code_id")],
+      order: [[Sequelize.fn("count", Sequelize.col("user_id")), "DESC"]],
     };
   }
 }
