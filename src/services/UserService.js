@@ -11,6 +11,15 @@ class CodeService {
     if (option?.language) {
       query = query.filterByLanguage(option.language);
     }
+    if (option.search) {
+      query = query.searchOnTitleAndContent(option.search);
+    }
+    if (option.pagination) {
+      query = query.paginate(option.pagination.limit, option.pagination.offset);
+    }
+    if (option.order == "stars") {
+      query = query.orderByStarsCount();
+    }
 
     const user_codes = query.excute();
     return user_codes;
