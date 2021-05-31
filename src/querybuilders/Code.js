@@ -19,6 +19,14 @@ class CodeQueryScopes {
       },
     };
   }
+  filterByStaringByUser(user_id) {
+    return {
+      include: [{ model: StaringRepo.repo, as: "stars" }],
+      where: {
+        ["stars.user_id"]: user_id,
+      },
+    };
+  }
   filterByAuthorId(author_id) {
     return {
       where: {
