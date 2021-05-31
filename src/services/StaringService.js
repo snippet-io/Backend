@@ -9,22 +9,21 @@ class StaringService {
     await new StaringQueryBuilder().delete({ code_id, user_id }).excute();
   }
   static async getStaredCodeByUser(user_id, option) {
-    const query = new CodeQueryBuilder()
-      .findAll()
-      .filterByStaringByUser(user_id);
-    if (option.language) {
+    let query = new CodeQueryBuilder().findAll().filterByStaringByUser(user_id);
+    if (option?.language) {
       query = query.filterByLanguage(option.language);
     }
-    if (option.search) {
+    if (option?.search) {
       query = query.searchOnTitleAndContent(option.search);
     }
-    if (option.order) {
+    if (option?.order) {
       if (option.order == "stars") {
         query = query.orderByStarsCount();
       }
     }
-    const starings_of_user = await query.excute();
-    const result = starings_of_user.map((staring) => staring.stared_code);
+    const stared_code_by_user = await query.excute();
+    console.log(stared_code_by_user);
+    const result = stared_code_by_user;
     return result;
   }
 }

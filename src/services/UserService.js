@@ -11,10 +11,10 @@ class CodeService {
     if (option?.language) {
       query = query.filterByLanguage(option.language);
     }
-    if (option.search) {
+    if (option?.search) {
       query = query.searchOnTitleAndContent(option.search);
     }
-    if (option.order == "stars") {
+    if (option?.order == "stars") {
       query = query.orderByStarsCount();
     }
 

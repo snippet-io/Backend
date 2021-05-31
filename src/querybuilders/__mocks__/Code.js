@@ -4,6 +4,7 @@ const Option = require("js-option");
 const ServiceTime = require("../../utils/ServiceTime");
 
 let db;
+let staring_db;
 const CodeQueryBuilder = jest.fn().mockImplementation(() => ({
   all: true,
   findAll: function () {
@@ -77,6 +78,23 @@ const CodeQueryBuilder = jest.fn().mockImplementation(() => ({
     this.result = this.result.sort((a, b) => b.stars - a.stars);
     return this;
   },
+  orderByLatest: function () {
+    this.result = this.result.sort(
+      (a, b) => b.created_datetime - a.created_datetime
+    );
+    return this;
+  },
+  filterByStaringByUser: function () {
+    this.result = this.result.filter(
+      (code) =>
+        staring_db.filter(
+          (staring) =>
+            staring.code_id == code.getId() &&
+            staring.user_id == code.getAuthorId()
+        ).length > 0
+    );
+    return this;
+  },
 
   excute: function () {
     if (this.cb) {
@@ -95,6 +113,7 @@ CodeQueryBuilder.mockClear = () => {
       .setCreatedDatetime(new ServiceTime("2021-04-19T00:00:00.000Z"))
       .build(),
   ];
+  staring_db = [{ code_id: 1, user_id: 1 }];
 };
 
 module.exports = CodeQueryBuilder;
