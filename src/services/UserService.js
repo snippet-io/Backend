@@ -14,9 +14,6 @@ class CodeService {
     if (option.search) {
       query = query.searchOnTitleAndContent(option.search);
     }
-    if (option.pagination) {
-      query = query.paginate(option.pagination.limit, option.pagination.offset);
-    }
     if (option.order == "stars") {
       query = query.orderByStarsCount();
     }
