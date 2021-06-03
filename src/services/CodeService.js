@@ -17,7 +17,7 @@ class CodeService {
       .excute();
 
     if (
-      codes_of_author.filter((code) => code.getId() === code_id).length === 0
+      codes_of_author.filter((code) => code.getId() == code_id).length === 0
     ) {
       throw new Forbidden();
     }
