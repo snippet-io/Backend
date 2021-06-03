@@ -19,7 +19,7 @@ class CodeService {
       query = query.orderByStarsCount();
     }
 
-    const user_codes = query.excute();
+    const user_codes = await query.excute();
     const staring_query = new StaringQueryBuilder();
     for (const code of user_codes) {
       code.setStarCount(
