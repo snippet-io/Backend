@@ -65,7 +65,10 @@ class CodeQueryScopes {
         },
       ],
       group: [Sequelize.col("id")],
-      order: [[Sequelize.fn("count", Sequelize.col("user_id")), "DESC"]],
+      order: [
+        [Sequelize.fn("count", Sequelize.col("user_id")), "DESC"],
+        ["created_datetime", "DESC"],
+      ],
     };
   }
 }
