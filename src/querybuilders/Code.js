@@ -64,7 +64,7 @@ class CodeQueryScopes {
           duplicating: false,
         },
       ],
-      group: [Sequelize.col("code_id")],
+      group: [Sequelize.col("id")],
       order: [[Sequelize.fn("count", Sequelize.col("user_id")), "DESC"]],
     };
   }
